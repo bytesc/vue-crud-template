@@ -1,0 +1,22 @@
+{
+  "name": "vue-crud",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "element-plus": "^2.3.14",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.4.5"
+  }
+}
