@@ -18,7 +18,7 @@ import Footer from "./components/nav/Footer.vue";
           </el-aside>
         </div>
 
-        <el-container>
+        <el-container style="min-height: 450px">
           <el-main>
             <router-view></router-view>
           </el-main>

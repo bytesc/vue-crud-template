@@ -6,9 +6,13 @@
         <h2>crud demo</h2>
       </div>
 
-    <div class="query-box" style="display: flex;justify-content: space-between;margin: 5px auto;">
-      <el-input v-model="QueryInput" placeholder="Please input" />
-      <Dialog/>
+    <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto;">
+
+      <div style=" display: flex; float: left">
+        <el-input v-model="QueryInput" placeholder="Please input" style="margin: 5px"/>
+        <el-button type="primary" style="margin: 5px;"><el-icon><Search /></el-icon></el-button>
+      </div>
+      <div style="margin: 5px"><Dialog dialogType="add"/></div>
     </div>
 
     <el-table :data="TableData"
@@ -16,12 +20,13 @@
               style="width: 100%"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
-      <el-table-column fixed prop="date" label="Date" width="150" />
+<!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
       <el-table-column prop="name" label="Name" width="120" />
-      <el-table-column prop="state" label="State" width="120" />
-      <el-table-column prop="city" label="City" width="120" />
-      <el-table-column prop="address" label="Address" width="600" />
-      <el-table-column prop="zip" label="Zip" width="120" />
+      <el-table-column prop="id" label="id" width="120" />
+      <el-table-column prop="level" label="Level" width="150" />
+      <el-table-column prop="email" label="email" width="160" />
+      <el-table-column prop="phone" label="phone" width="160" />
+      <el-table-column prop="birthday" label="Birthday" width="150" />
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default>
           <el-button link type="primary" size="small" @click="handleRowClick"
@@ -42,11 +47,10 @@
 import Dialog from "./dialog.vue"
 import {ref} from "vue";
 import {valueEquals} from "element-plus";
+import {Search} from "@element-plus/icons-vue";
 // 数据
 let QueryInput = ref("")
 // let TableData= ref("")
-
-
 const multipleSelection = ref([])
 const handleSelectionChange = (val) => {
   multipleSelection.value = val
@@ -56,42 +60,41 @@ const handleSelectionChange = (val) => {
 let handleRowClick = () => {
   console.log('click')
 }
+
+let dialogType = ref("add")
+
 const TableData = [
   {
-    date: '2016-05-03',
+    id:"1",
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
+    level:"1",
+    email: '123456@xx.com',
+    phone:"18812341234",
+    birthday: "2023-10-12"
   },
   {
-    date: '2016-05-02',
+    id:"2",
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
+    level:"1",
+    email: '123456@xx.com',
+    phone:"18812341234",
+    birthday: "2023-10-12"
   },
   {
-    date: '2016-05-04',
+    id:"3",
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
+    level:"1",
+    email: '123456@xx.com',
+    phone:"18812341234",
+    birthday: "2023-10-12"
   },
   {
-    date: '2016-05-01',
+    id:"4",
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
+    level:"1",
+    email: '123456@xx.com',
+    phone:"18812341234",
+    birthday: "2023-10-12"
   },
 ]
 
