@@ -1,6 +1,7 @@
 
 
 <template>
+
     <div class="table-box" style="margin: 5px auto;">
       <div class="title" style="text-align: center">
         <h2>crud demo</h2>

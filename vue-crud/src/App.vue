@@ -3,9 +3,11 @@
 import SideNav from "./components/nav/SideNav.vue"
 import TopNav from "./components/nav/TopNav.vue";
 import Footer from "./components/nav/Footer.vue";
+import Statement from "./components/form/Statement.vue";
 </script>
 
 <template>
+  <Statement/>
   <div class="common-layout">
     <el-container>
       <el-header style="padding: 0">
