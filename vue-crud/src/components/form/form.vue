@@ -13,7 +13,8 @@
         <el-input v-model="QueryInput" placeholder="Please input" style="margin: 5px"/>
         <el-button type="primary" style="margin: 5px;"><el-icon><Search /></el-icon></el-button>
       </div>
-      <div style="margin: 5px"><Dialog dialogType="add"/></div>
+      <div style="margin: 5px"><Dialog dialogType="add"  @MsgToFather="childEven"/></div>
+<!--      子父组件传数据，父端-->
     </div>
 
     <el-table :data="TableData"
@@ -33,7 +34,7 @@
           <el-button link type="primary" size="small" @click="handleRowClick"
           >Detail</el-button
           >
-          <el-button link type="primary" size="small">Edit</el-button>
+          <Dialog dialogType="edit"></Dialog>
         </template>
       </el-table-column>
     </el-table>
@@ -46,13 +47,14 @@
 
 <script setup lang="ts">
 import Dialog from "./dialog.vue"
-import {ref} from "vue";
+import {ref, reactive} from "vue";
 import {valueEquals} from "element-plus";
 import {Search} from "@element-plus/icons-vue";
 // 数据
 let QueryInput = ref("")
 // let TableData= ref("")
 const multipleSelection = ref([])
+
 const handleSelectionChange = (val) => {
   multipleSelection.value = val
   console.log(val)
@@ -62,9 +64,17 @@ let handleRowClick = () => {
   console.log('click')
 }
 
-let dialogType = ref("add")
+// 父传子，父端
+const childEven=(val)=>{
+  console.log(val);
+  TableData.push({
+    id: (TableData.length+1).toString(),
+    ...val
+  })
+}
 
-const TableData = [
+// reactive才可刷新
+let TableData = reactive([
   {
     id:"1",
     name: 'Tom',
@@ -97,7 +107,7 @@ const TableData = [
     phone:"18812341234",
     birthday: "2023-10-12"
   },
-]
+])
 
 
 // 方法

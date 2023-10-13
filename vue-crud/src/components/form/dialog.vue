@@ -1,11 +1,17 @@
 <template>
 
   <!-- Form -->
-  <el-button type="primary" @click="handleAdd">
+  <el-button v-if="props.dialogType === 'add'" type="primary" @click="handleAdd">
     <el-icon><Plus /></el-icon> 添加
   </el-button>
 
-  <el-dialog v-model="dialogFormVisible" :title="props.dialogType === 'add' ? '新增':'编辑'">
+  <el-button v-if="props.dialogType === 'edit'" link type="primary" size="small" @click="handleAdd">
+    编辑
+  </el-button>
+
+  <el-dialog v-model="dialogFormVisible"
+             :title="props.dialogType === 'add' ? '新增':'编辑'"
+             :append-to-body="true">
     <el-form :model="form">
       <el-form-item label="name" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
@@ -26,7 +32,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">
+        <el-button type="primary" @click="dialogConfirm">
           确认
         </el-button>
       </span>
@@ -39,16 +45,27 @@ import { reactive, ref } from 'vue'
 
 import {Plus} from "@element-plus/icons-vue";
 
+//父传子，子端
 import { defineProps } from 'vue';
 const props = defineProps({
   dialogType:String,
 })
+
+//子传父，子端
+const emit = defineEmits(['MsgToFather'])
+const dialogConfirm = ()=>{
+  dialogFormVisible.value=false
+  emit('MsgToFather',form)
+}
 
 const dialogFormVisible = ref(false)
 const handleAdd = ()=>{
   dialogFormVisible.value=true //注意，这是要.value
   console.log(dialogFormVisible.value)
 }
+
+
+
 
 const formLabelWidth = '140px'
 
@@ -59,6 +76,7 @@ const form = reactive({
   birthday: '',
   level: '',
 })
+
 </script>
 <style scoped>
 .dialog-footer button:first-child {
