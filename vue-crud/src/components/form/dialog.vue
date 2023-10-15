@@ -46,7 +46,6 @@ import { reactive, ref } from 'vue'
 import {Plus} from "@element-plus/icons-vue";
 
 //父传子，子端
-import { defineProps } from 'vue';
 const props = defineProps({
   dialogType:String,
 })
@@ -63,8 +62,6 @@ const handleAdd = ()=>{
   dialogFormVisible.value=true //注意，这是要.value
   console.log(dialogFormVisible.value)
 }
-
-
 
 
 const formLabelWidth = '140px'

@@ -30,10 +30,11 @@
       <el-table-column prop="phone" label="phone" width="160" />
       <el-table-column prop="birthday" label="Birthday" width="150" />
       <el-table-column fixed="right" label="Operations" width="120">
-        <template #default>
-          <el-button link type="primary" size="small" @click="handleRowClick"
-          >Detail</el-button
-          >
+        <template #default="scope">
+<!--          这里必须是#default="scope"-->
+          <el-button link type="danger" size="small" @click="handleRowDelete(scope.row)">
+            删除
+          </el-button>
           <Dialog dialogType="edit"></Dialog>
         </template>
       </el-table-column>
@@ -57,16 +58,19 @@ const multipleSelection = ref([])
 
 const handleSelectionChange = (val) => {
   multipleSelection.value = val
-  console.log(val)
+  // console.log(val)
 }
 
-let handleRowClick = () => {
-  console.log('click')
+const handleRowDelete = (row) =>{
+  // console.log(row.id)
+  let index = TableData.findIndex(item => item.id === row.id)
+  // console.log(index)
+  TableData.splice(index,1)
 }
 
 // 父传子，父端
 const childEven=(val)=>{
-  console.log(val);
+  // console.log(val);
   TableData.push({
     id: (TableData.length+1).toString(),
     ...val
