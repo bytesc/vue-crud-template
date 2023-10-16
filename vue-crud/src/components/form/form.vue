@@ -13,8 +13,13 @@
         <el-input v-model="QueryInput" placeholder="Please input" style="margin: 5px"/>
         <el-button type="primary" style="margin: 5px;"><el-icon><Search /></el-icon></el-button>
       </div>
-      <div style="margin: 5px"><Dialog dialogType="add"  @MsgToFather="childEven"/></div>
-<!--      子父组件传数据，父端-->
+      <div style=" display: flex; float: right">
+        <el-button type="danger" @click="handleListDelete" style="margin: 5px" v-if="multipleSelection.length>0">
+          <el-icon><Delete /></el-icon> 删除
+        </el-button>
+        <div style="margin: 5px"><Dialog dialogType="add"  @MsgToFather="childEven"/></div>
+        <!--      子父组件传数据，父端-->
+      </div>
     </div>
 
     <el-table :data="TableData"
@@ -32,7 +37,7 @@
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
 <!--          这里必须是#default="scope"-->
-          <el-button link type="danger" size="small" @click="handleRowDelete(scope.row)">
+          <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.id)">
             删除
           </el-button>
           <Dialog dialogType="edit"></Dialog>
@@ -50,22 +55,36 @@
 import Dialog from "./dialog.vue"
 import {ref, reactive} from "vue";
 import {valueEquals} from "element-plus";
-import {Search} from "@element-plus/icons-vue";
+import {Delete, Search} from "@element-plus/icons-vue";
 // 数据
 let QueryInput = ref("")
 // let TableData= ref("")
-const multipleSelection = ref([])
 
-const handleSelectionChange = (val) => {
-  multipleSelection.value = val
-  // console.log(val)
-}
 
-const handleRowDelete = (row) =>{
+const handleRowDelete = (id) =>{
   // console.log(row.id)
-  let index = TableData.findIndex(item => item.id === row.id)
+  let index = TableData.findIndex(item => item.id === id)
   // console.log(index)
   TableData.splice(index,1)
+}
+
+const multipleSelection = ref([])
+const handleSelectionChange = (val) => {
+  // console.log(val)
+  // multipleSelection.value = val
+  multipleSelection.value=[]
+  val.forEach(item=>{
+    multipleSelection.value.push(item.id)
+  })
+  // console.log(multipleSelection.value)
+}
+
+const handleListDelete=()=>{
+  multipleSelection.value.forEach((id)=>{
+    console.log(id)
+    handleRowDelete(id)
+  })
+  multipleSelection.value=[]
 }
 
 // 父传子，父端

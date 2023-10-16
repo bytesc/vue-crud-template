@@ -1,7 +1,7 @@
 <template>
 
   <!-- Form -->
-  <el-button v-if="props.dialogType === 'add'" type="primary" @click="handleAdd">
+  <el-button v-if="props.dialogType === 'add'" type="success" @click="handleAdd">
     <el-icon><Plus /></el-icon> 添加
   </el-button>
 
