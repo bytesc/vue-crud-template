@@ -10,8 +10,8 @@
     <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto; ">
 
       <div style=" display: flex; float: left">
-        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px" />
-        <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: 150px" >
+        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"/>
+        <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: 150px">
           <el-option
               v-for="item in searchModeOptions"
               :key="item.value"
@@ -20,7 +20,7 @@
               :disabled="item.disabled"
           />
         </el-select>
-        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>
+<!--        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>-->
 
       </div>
 
@@ -39,10 +39,11 @@
     <el-table :data="TableData"
               ref="multipleTableRef"
               style="width: 100%"
-              @selection-change="handleSelectionChange">
+              @selection-change="handleSelectionChange"
+              :row-class-name="tableRowClassName">
       <el-table-column type="selection" width="55" />
 <!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
-      <el-table-column prop="name" label="Name" width="120" />
+      <el-table-column prop="name" label="Name" width="120"/>
       <el-table-column prop="id" label="id" width="120" />
       <el-table-column prop="level" label="Level" width="80" />
       <el-table-column prop="email" label="email" width="240" />
@@ -126,41 +127,6 @@ const childEven=(val, dialogType)=>{
   }
 }
 
-// 数据
-let QueryInput = ref("")
-
-
-const HandleQuery = ()=>{
-  // console.log(QueryInput.value)
-  // console.log(TableData)
-  if(QueryInput.value.length>0){
-    if (searchModeValue.value==="phone_email"){
-      TableData.value = TableData.value.filter((item)=>{
-        return  item.phone.match(QueryInput.value) || item.email.match(QueryInput.value)
-      })
-    }
-    if (searchModeValue.value==="id"){
-      TableData.value = TableData.value.filter((item)=>{
-        return  item.id.toLowerCase().match(QueryInput.value.toLowerCase())
-      })
-    }
-    if (searchModeValue.value==="name"){
-      TableData.value = TableData.value.filter((item)=>{
-        return  item.name.toLowerCase().match(QueryInput.value.toLowerCase())
-      })
-    }
-    if (searchModeValue.value==="level"){
-      TableData.value = TableData.value.filter((item)=>{
-        return  item.level.toLowerCase().match(QueryInput.value.toLowerCase())
-      })
-    }
-    // reactive刷新方法
-    // TableData.value.splice(0,TableData.value.length)
-    // TableData.value.unshift(...newTableData)
-  }
-}
-
-
 const searchModeValue = ref('id')
 const searchModeOptions = [
   {
@@ -181,6 +147,43 @@ const searchModeOptions = [
     disabled: false
   }
 ]
+
+let QueryInput = ref("")
+
+/*控制行可见*/
+const tableRowClassName = ({row, index})=>{
+    if (searchModeValue.value==="phone_email"){
+      if (row.phone.toLowerCase().match(QueryInput.value.toLowerCase()) || row.email.toLowerCase().match(QueryInput.value.toLowerCase())) {
+        return '';
+      }
+      else{return 'hidden-row'}
+    }
+    if (searchModeValue.value==="id"){
+      if (row.id.toLowerCase().match(QueryInput.value.toLowerCase())) {
+        return '';
+      }
+      else{return 'hidden-row'}
+    }
+    if (searchModeValue.value==="name"){
+      if (row.name.toLowerCase().match(QueryInput.value.toLowerCase())) {
+        return '';
+      }
+      else{return 'hidden-row'}
+    }
+    if (searchModeValue.value==="level"){
+      if (row.level.toLowerCase().match(QueryInput.value.toLowerCase())) {
+        return '';
+      }
+      else{return 'hidden-row'}
+    }
+    return ''
+}
+
+    // reactive刷新方法
+    // TableData.value.splice(0,TableData.value.length)
+    // TableData.value.unshift(...newTableData)
+
+
 
 // reactive才可刷新
 let TableData = ref([
@@ -227,6 +230,13 @@ let TableData = ref([
 
 </script>
 
-<style scoped>
+<!--<style scoped>-->
+<!--不能scoped，否则tableRowClassName出错-->
+<style>
+
+/*控制行可见*/
+.el-table .hidden-row {
+  display: none;
+}
 
 </style>
