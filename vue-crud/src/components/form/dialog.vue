@@ -63,12 +63,12 @@ const dialogFormVisible = ref(false)
 
 const handleAdd = ()=>{
   dialogFormVisible.value=true //注意，这是要.value
-  console.log(dialogFormVisible.value)
+  // console.log(dialogFormVisible.value)
 }
 
 const handleEdit = ()=>{
   dialogFormVisible.value=true
-  console.log(props.TableRow)
+  // console.log(props.TableRow)
   form = reactive({
     id:props.TableRow.id,
     name: props.TableRow.name,

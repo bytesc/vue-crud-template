@@ -10,9 +10,10 @@
     <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto;">
 
       <div style=" display: flex; float: left">
-        <el-input v-model="QueryInput" placeholder="Please input" style="margin: 5px"/>
-        <el-button type="primary" style="margin: 5px;"><el-icon><Search /></el-icon></el-button>
+        <el-input v-model="QueryInput" placeholder="请输入搜索" style="margin: 5px"/>
+        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>
       </div>
+
       <div style=" display: flex; float: right">
         <el-button type="danger" @click="handleListDelete" style="margin: 5px" v-if="multipleSelection.length>0">
           <el-icon><Delete /></el-icon> 删除
@@ -22,6 +23,7 @@
         </div>
         <!--      子父组件传数据，父端-->
       </div>
+
     </div>
 
     <el-table :data="TableData"
@@ -60,10 +62,6 @@ import Dialog from "./dialog.vue" //对话框组件
 import {ref, reactive} from "vue";
 
 import {Delete, Search} from "@element-plus/icons-vue"; //引入icon
-
-// 数据
-let QueryInput = ref("")
-// let TableData= ref("")
 
 // 单行删除
 const handleRowDelete = (id) =>{
@@ -117,6 +115,13 @@ const childEven=(val, dialogType)=>{
     let index = TableData.findIndex((item)=>item.id === val.id)
     TableData[index] = val
   }
+}
+
+// 数据
+let QueryInput = ref("")
+
+const HandleQuery = ()=>{
+
 }
 
 // reactive才可刷新
