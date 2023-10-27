@@ -17,7 +17,9 @@
         <el-button type="danger" @click="handleListDelete" style="margin: 5px" v-if="multipleSelection.length>0">
           <el-icon><Delete /></el-icon> 删除
         </el-button>
-        <div style="margin: 5px"><Dialog dialogType="add"  @MsgToFather="childEven"/></div>
+        <div style="margin: 5px">
+          <Dialog dialogType="add"  @MsgToFather="childEven"/>
+        </div>
         <!--      子父组件传数据，父端-->
       </div>
     </div>
@@ -30,8 +32,8 @@
 <!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
       <el-table-column prop="name" label="Name" width="120" />
       <el-table-column prop="id" label="id" width="120" />
-      <el-table-column prop="level" label="Level" width="150" />
-      <el-table-column prop="email" label="email" width="160" />
+      <el-table-column prop="level" label="Level" width="80" />
+      <el-table-column prop="email" label="email" width="240" />
       <el-table-column prop="phone" label="phone" width="160" />
       <el-table-column prop="birthday" label="Birthday" width="150" />
       <el-table-column fixed="right" label="Operations" width="120">
@@ -40,7 +42,7 @@
           <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.id)">
             删除
           </el-button>
-          <Dialog dialogType="edit"></Dialog>
+          <Dialog dialogType="edit"  :TableRow=scope.row @MsgToFather="childEven"></Dialog>
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +65,7 @@ let QueryInput = ref("")
 
 const handleRowDelete = (id) =>{
   // console.log(row.id)
-  let index = TableData.findIndex(item => item.id === id)
+  let index = TableData.findIndex((item) => item.id === id)
   // console.log(index)
   TableData.splice(index,1)
 }
@@ -88,12 +90,27 @@ const handleListDelete=()=>{
 }
 
 // 父传子，父端
-const childEven=(val)=>{
-  // console.log(val);
-  TableData.push({
-    id: (TableData.length+1).toString(),
-    ...val
-  })
+const childEven=(val, dialogType)=>{
+  console.log(val);
+  if (dialogType==="add"){
+    let newRow = {...val}
+    val.id = (TableData.length+1).toString()
+    TableData.push(newRow)
+  }
+
+  if (dialogType==="edit"){
+    // TableData.forEach((item) => {
+    //   if (item.id === val.id) {
+    //     item.name = val.name;
+    //     item.level = val.level;
+    //     item.email = val.email;
+    //     item.phone = val.phone;
+    //     item.birthday = val.birthday;
+    //   }
+    // });
+    let index = TableData.findIndex((item)=>item.id === val.id)
+    TableData[index] = val
+  }
 }
 
 // reactive才可刷新

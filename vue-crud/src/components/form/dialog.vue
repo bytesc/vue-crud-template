@@ -5,7 +5,7 @@
     <el-icon><Plus /></el-icon> 添加
   </el-button>
 
-  <el-button v-if="props.dialogType === 'edit'" link type="primary" size="small" @click="handleAdd">
+  <el-button v-if="props.dialogType === 'edit'" link type="primary" size="small" @click="handleEdit">
     编辑
   </el-button>
 
@@ -48,25 +48,40 @@ import {Plus} from "@element-plus/icons-vue";
 //父传子，子端
 const props = defineProps({
   dialogType:String,
+  TableRow:Object
 })
 
 //子传父，子端
 const emit = defineEmits(['MsgToFather'])
 const dialogConfirm = ()=>{
   dialogFormVisible.value=false
-  emit('MsgToFather',form)
+  emit('MsgToFather',form,props.dialogType)
 }
 
 const dialogFormVisible = ref(false)
+
 const handleAdd = ()=>{
   dialogFormVisible.value=true //注意，这是要.value
   console.log(dialogFormVisible.value)
 }
 
+const handleEdit = ()=>{
+  dialogFormVisible.value=true
+  console.log(props.TableRow)
+  form = reactive({
+    id:props.TableRow.id,
+    name: props.TableRow.name,
+    phone: props.TableRow.phone,
+    email: props.TableRow.email,
+    birthday: props.TableRow.birthday,
+    level: props.TableRow.level
+  });
+}
 
 const formLabelWidth = '140px'
 
-const form = reactive({
+let form = reactive({
+  id:"",
   name: '',
   phone:"",
   email:"",
