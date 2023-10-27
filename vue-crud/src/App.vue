@@ -1,8 +1,13 @@
 <script setup lang="ts">
 
+//app.vue是整个项目的基底，这个文件里主要负责总布局
+
+//三个边栏组件
 import SideNav from "./components/nav/SideNav.vue"
 import TopNav from "./components/nav/TopNav.vue";
 import Footer from "./components/nav/Footer.vue";
+
+//声明弹窗
 import Statement from "./components/form/Statement.vue";
 </script>
 
@@ -22,7 +27,7 @@ import Statement from "./components/form/Statement.vue";
 
         <el-container style="min-height: 450px">
           <el-main>
-            <router-view></router-view>
+            <router-view></router-view>  <!--这里是路由区域，点击连接会在这里显示子页面-->
           </el-main>
 
         </el-container>

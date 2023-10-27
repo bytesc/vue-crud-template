@@ -1,6 +1,7 @@
 <template>
 
   <!-- Form -->
+<!--  判断是添加还是编辑，显示不同的按钮-->
   <el-button v-if="props.dialogType === 'add'" type="success" @click="handleAdd">
     <el-icon><Plus /></el-icon> 添加
   </el-button>
@@ -55,7 +56,7 @@ const props = defineProps({
 const emit = defineEmits(['MsgToFather'])
 const dialogConfirm = ()=>{
   dialogFormVisible.value=false
-  emit('MsgToFather',form,props.dialogType)
+  emit('MsgToFather',form,props.dialogType) //向父组件定义的Childeven函数传两个参
 }
 
 const dialogFormVisible = ref(false)

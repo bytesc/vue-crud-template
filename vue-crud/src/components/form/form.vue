@@ -38,10 +38,11 @@
       <el-table-column prop="birthday" label="Birthday" width="150" />
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-<!--          这里必须是#default="scope"-->
+<!-- 这里必须是#default="scope"，表示在子组件el-table中的插槽slot-->
           <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.id)">
             删除
           </el-button>
+          <!--      子父组件传数据，父端-->
           <Dialog dialogType="edit"  :TableRow=scope.row @MsgToFather="childEven"></Dialog>
         </template>
       </el-table-column>
@@ -54,15 +55,17 @@
 </template>
 
 <script setup lang="ts">
-import Dialog from "./dialog.vue"
+import Dialog from "./dialog.vue" //对话框组件
+
 import {ref, reactive} from "vue";
-import {valueEquals} from "element-plus";
-import {Delete, Search} from "@element-plus/icons-vue";
+
+import {Delete, Search} from "@element-plus/icons-vue"; //引入icon
+
 // 数据
 let QueryInput = ref("")
 // let TableData= ref("")
 
-
+// 单行删除
 const handleRowDelete = (id) =>{
   // console.log(row.id)
   let index = TableData.findIndex((item) => item.id === id)
@@ -70,6 +73,7 @@ const handleRowDelete = (id) =>{
   TableData.splice(index,1)
 }
 
+//多行选择
 const multipleSelection = ref([])
 const handleSelectionChange = (val) => {
   // console.log(val)
@@ -81,17 +85,19 @@ const handleSelectionChange = (val) => {
   // console.log(multipleSelection.value)
 }
 
+//多行删除
 const handleListDelete=()=>{
   multipleSelection.value.forEach((id)=>{
-    console.log(id)
+    // console.log(id)
     handleRowDelete(id)
   })
   multipleSelection.value=[]
 }
 
 // 父传子，父端
+// 对话框子组件事件，编辑或删除
 const childEven=(val, dialogType)=>{
-  console.log(val);
+  // console.log(val);
   if (dialogType==="add"){
     let newRow = {...val}
     val.id = (TableData.length+1).toString()
