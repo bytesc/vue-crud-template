@@ -69,7 +69,7 @@ const handleAdd = ()=>{
 const handleEdit = ()=>{
   dialogFormVisible.value=true
   // console.log(props.TableRow)
-  form = reactive({
+  form = ref({
     id:props.TableRow.id,
     name: props.TableRow.name,
     phone: props.TableRow.phone,
@@ -81,7 +81,7 @@ const handleEdit = ()=>{
 
 const formLabelWidth = '140px'
 
-let form = reactive({
+let form = ref({
   id:"",
   name: '',
   phone:"",

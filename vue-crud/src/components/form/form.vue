@@ -7,11 +7,21 @@
         <h2>crud demo</h2>
       </div>
 
-    <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto;">
+    <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto; ">
 
       <div style=" display: flex; float: left">
-        <el-input v-model="QueryInput" placeholder="请输入搜索" style="margin: 5px"/>
+        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px" />
+        <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: 150px" >
+          <el-option
+              v-for="item in searchModeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              :disabled="item.disabled"
+          />
+        </el-select>
         <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>
+
       </div>
 
       <div style=" display: flex; float: right">
@@ -58,17 +68,16 @@
 
 <script setup lang="ts">
 import Dialog from "./dialog.vue" //对话框组件
-
-import {ref, reactive} from "vue";
+import {reactive, ref} from "vue";
 
 import {Delete, Search} from "@element-plus/icons-vue"; //引入icon
 
 // 单行删除
 const handleRowDelete = (id) =>{
   // console.log(row.id)
-  let index = TableData.findIndex((item) => item.id === id)
+  let index = TableData.value.findIndex((item) => item.id === id)
   // console.log(index)
-  TableData.splice(index,1)
+  TableData.value.splice(index,1)
 }
 
 //多行选择
@@ -97,9 +106,9 @@ const handleListDelete=()=>{
 const childEven=(val, dialogType)=>{
   // console.log(val);
   if (dialogType==="add"){
-    let newRow = {...val}
-    val.id = (TableData.length+1).toString()
-    TableData.push(newRow)
+    let newRow = {...val.value}
+    val.value.id = (TableData.value.length+1).toString()
+    TableData.value.push(newRow)
   }
 
   if (dialogType==="edit"){
@@ -112,20 +121,69 @@ const childEven=(val, dialogType)=>{
     //     item.birthday = val.birthday;
     //   }
     // });
-    let index = TableData.findIndex((item)=>item.id === val.id)
-    TableData[index] = val
+    let index = TableData.value.findIndex((item)=>item.id === val.value.id)
+    TableData.value[index] = val.value
   }
 }
 
 // 数据
 let QueryInput = ref("")
 
-const HandleQuery = ()=>{
 
+const HandleQuery = ()=>{
+  // console.log(QueryInput.value)
+  // console.log(TableData)
+  if(QueryInput.value.length>0){
+    if (searchModeValue.value==="phone_email"){
+      TableData.value = TableData.value.filter((item)=>{
+        return  item.phone.match(QueryInput.value) || item.email.match(QueryInput.value)
+      })
+    }
+    if (searchModeValue.value==="id"){
+      TableData.value = TableData.value.filter((item)=>{
+        return  item.id.toLowerCase().match(QueryInput.value.toLowerCase())
+      })
+    }
+    if (searchModeValue.value==="name"){
+      TableData.value = TableData.value.filter((item)=>{
+        return  item.name.toLowerCase().match(QueryInput.value.toLowerCase())
+      })
+    }
+    if (searchModeValue.value==="level"){
+      TableData.value = TableData.value.filter((item)=>{
+        return  item.level.toLowerCase().match(QueryInput.value.toLowerCase())
+      })
+    }
+    // reactive刷新方法
+    // TableData.value.splice(0,TableData.value.length)
+    // TableData.value.unshift(...newTableData)
+  }
 }
 
+
+const searchModeValue = ref('id')
+const searchModeOptions = [
+  {
+    value: 'id',
+    label: '按 id',
+  },
+  {
+    value: 'name',
+    label: '按名字',
+  },
+  {
+    value: 'phone_email',
+    label: '按手机号邮箱号',
+  },
+  {
+    value: 'level',
+    label: '按用户等级',
+    disabled: false
+  }
+]
+
 // reactive才可刷新
-let TableData = reactive([
+let TableData = ref([
   {
     id:"1",
     name: 'Tom',
@@ -159,7 +217,11 @@ let TableData = reactive([
     birthday: "2023-10-12"
   },
 ])
-
+// 深拷贝
+// let copiedData = JSON.parse(JSON.stringify(TableData))
+// let TableDataCopy = ref(copiedData)
+//浅拷贝
+// let TableDataCopy = Object.assign(TableData)
 
 // 方法
 
