@@ -10,7 +10,10 @@
     <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto; ">
 
       <div style=" display: flex; float: left">
-        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"/>
+        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"
+                  type="date" v-if="searchModeValue==='birthday'"/>
+        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"
+                  v-else/>
         <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: 150px">
           <el-option
               v-for="item in searchModeOptions"
@@ -145,6 +148,11 @@ const searchModeOptions = [
     value: 'level',
     label: '按用户等级',
     disabled: false
+  },
+  {
+    value: 'birthday',
+    label: '按生日',
+    disabled: false
   }
 ]
 
@@ -176,6 +184,12 @@ const tableRowClassName = ({row, index})=>{
       }
       else{return 'hidden-row'}
     }
+  if (searchModeValue.value==="birthday"){
+    if (row.birthday.toLowerCase().match(QueryInput.value.toLowerCase())) {
+      return '';
+    }
+    else{return 'hidden-row'}
+  }
     return ''
 }
 
@@ -197,27 +211,27 @@ let TableData = ref([
   },
   {
     id:"2",
-    name: 'Tom',
-    level:"1",
-    email: '123456@xx.com',
-    phone:"18812341234",
-    birthday: "2023-10-12"
+    name: '小明',
+    level:"2",
+    email: 'z123456@xx.com',
+    phone:"18912341234",
+    birthday: "2022-10-12"
   },
   {
     id:"3",
-    name: 'Tom',
+    name: 'Alice',
     level:"1",
-    email: '123456@xx.com',
-    phone:"18812341234",
-    birthday: "2023-10-12"
+    email: 'y123456@xx.com',
+    phone:"13912341234",
+    birthday: "2023-1-9"
   },
   {
     id:"4",
-    name: 'Tom',
-    level:"1",
-    email: '123456@xx.com',
-    phone:"18812341234",
-    birthday: "2023-10-12"
+    name: 'Jack',
+    level:"9",
+    email: 'x123456@xx.com',
+    phone:"18012341234",
+    birthday: "2023-8-22"
   },
 ])
 // 深拷贝
