@@ -2,7 +2,7 @@
 
   <!-- Form -->
 
-  <el-dialog v-model="dialogFormVisible" title="声明">
+  <el-dialog v-model="dialogFormVisible" title="声明" :show-close="true">
     <span>This is a message</span>
     <template #footer>
       <span class="dialog-footer">

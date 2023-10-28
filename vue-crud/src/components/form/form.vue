@@ -7,35 +7,38 @@
         <h2>crud demo</h2>
       </div>
 
-    <div class="query-box" style="display: flex;justify-content: space-between; margin: 5px auto; ">
-
-      <div style=" display: flex; float: left">
-        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"
-                  type="date" v-if="searchModeValue==='birthday'"/>
-        <el-input v-model="QueryInput" placeholder="请输入搜索内容" style="margin: 5px; width: 200px"
-                  v-else/>
-        <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: 150px">
-          <el-option
-              v-for="item in searchModeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="item.disabled"
-          />
-        </el-select>
-<!--        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>-->
-
-      </div>
-
-      <div style=" display: flex; float: right">
-        <el-button type="danger" @click="handleListDelete" style="margin: 5px" v-if="multipleSelection.length>0">
-          <el-icon><Delete /></el-icon> 删除
-        </el-button>
-        <div style="margin: 5px">
-          <Dialog dialogType="add"  @MsgToFather="childEven"/>
-        </div>
-        <!--      子父组件传数据，父端-->
-      </div>
+    <div class="query-box" style=" margin: 5px auto; ">
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="16" :md="16" :lg="20" :xl="20">
+          <el-row justify="start">
+            <el-input v-model="QueryInput"  style="margin: 5px; width: auto"
+                      type="date" v-if="searchModeValue==='birthday'"/>
+            <el-input v-model="QueryInput" placeholder="请输入搜索内容🔍"  style="margin: 5px; width: auto"
+                      v-else/>
+            <el-select v-model="searchModeValue" placeholder="选择搜索模式" style="margin: 5px; width: auto">
+              <el-option
+                  v-for="item in searchModeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+              />
+            </el-select>
+            <!--        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>-->
+          </el-row>
+        </el-col>
+        <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
+          <el-row justify="end">
+            <el-button type="danger" @click="handleListDelete" style="margin: 5px" v-if="multipleSelection.length>0">
+              <el-icon><Delete /></el-icon> 删除
+            </el-button>
+            <div style="margin: 5px">
+              <Dialog dialogType="add"  @MsgToFather="childEven"/>
+            </div>
+            <!--      子父组件传数据，父端-->
+          </el-row>
+       </el-col>
+      </el-row>
 
     </div>
 
@@ -46,12 +49,12 @@
               :row-class-name="tableRowClassName">
       <el-table-column type="selection" width="55" />
 <!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
-      <el-table-column prop="name" label="Name" width="120"/>
-      <el-table-column prop="id" label="id" width="120" />
-      <el-table-column prop="level" label="Level" width="80" />
-      <el-table-column prop="email" label="email" width="240" />
-      <el-table-column prop="phone" label="phone" width="160" />
-      <el-table-column prop="birthday" label="Birthday" width="150" />
+      <el-table-column prop="name" label="Name" width="120"  sortable/>
+      <el-table-column prop="id" label="id" width="120"  sortable/>
+      <el-table-column prop="level" label="Level" width="120"  sortable/>
+      <el-table-column prop="email" label="email" width="240"  sortable/>
+      <el-table-column prop="phone" label="phone" width="160"  sortable/>
+      <el-table-column prop="birthday" label="Birthday" width="120"  sortable/>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
 <!-- 这里必须是#default="scope"，表示在子组件el-table中的插槽slot-->
