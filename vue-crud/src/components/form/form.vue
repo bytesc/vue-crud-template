@@ -114,7 +114,11 @@ const childEven=(val, dialogType)=>{
   // console.log(val);
   if (dialogType==="add"){
     let newRow = {...val.value}
-    val.value.id = (TableData.value.length+1).toString()
+    let newId = parseInt(
+        TableData.value.reduce((max, current) => (
+        parseInt(current.id) > parseInt(max.id) ? current : max)
+        ).id)+1  // 找出现有最大id+1
+    newRow.id = newId.toString()
     TableData.value.push(newRow)
   }
 
