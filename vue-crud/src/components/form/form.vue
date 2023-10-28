@@ -75,9 +75,23 @@
 
 <script setup lang="ts">
 import Dialog from "./dialog.vue" //对话框组件
-import {reactive, ref} from "vue";
+import {computed, ref} from "vue";
 
-import {Delete, Search} from "@element-plus/icons-vue"; //引入icon
+import {Delete} from "@element-plus/icons-vue"; //引入icon
+
+// import { useRoute } from 'vue-router'
+// const route = useRoute()
+// const routerNow = computed(()=>{  //计算属性
+//   return route
+// })
+// // {{ routerNow }}
+// import { onMounted } from 'vue'
+// onMounted(() => {
+//   console.log(`the component is now mounted.`)
+//   console.log(route.path) //获取路由
+// })
+
+
 
 // 单行删除
 const handleRowDelete = (id) =>{
