@@ -2,7 +2,7 @@
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
     <el-breadcrumb-item v-for="item in breadcrumbList">
-      <a href="/" >{{ item.meta.title }}</a>
+      <a :href="'#' + item.path" >{{ item.meta.title }}</a>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -49,7 +49,7 @@ watch(
         () => route.matched,
         (newVal) => {
           currentActive.value = newVal
-          console.log(newVal)
+          // console.log(newVal)
         }
     )
 
