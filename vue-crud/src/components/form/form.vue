@@ -46,7 +46,8 @@
               ref="multipleTableRef"
               style="width: 100%"
               @selection-change="handleSelectionChange"
-              :row-class-name="tableRowClassName">
+              :row-class-name="tableRowClassName"
+              :max-height="800">
       <el-table-column type="selection" width="55" />
 <!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
       <el-table-column prop="name" label="Name" width="120"  sortable/>
@@ -57,7 +58,7 @@
       <el-table-column prop="birthday" label="Birthday" width="120"  sortable/>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-<!-- 这里必须是#default="scope"，表示在子组件el-table中的插槽slot-->
+<!-- 这里必须是#default="scope"，表示在子组件el-table-column中的插槽slot-->
           <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.id)">
             删除
           </el-button>

@@ -18,14 +18,26 @@ const routes = [
     {
         path: '/form',
         component:Form,
+        name: "form",
+        meta:{
+            title:"表单",
+        }
     },
     {
         path: '/file1',
         component:File1,
+        name: "file1",
+        meta:{
+            title:"文件1",
+        }
     },
     {
         path: '/file2',
-        component:File2
+        component:File2,
+        name: "file2",
+        meta:{
+            title:"文件2",
+        }
     },
 ]
 

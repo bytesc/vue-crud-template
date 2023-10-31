@@ -6,6 +6,7 @@
 import SideNav from "./components/nav/SideNav.vue"
 import TopNav from "./components/nav/TopNav.vue";
 import Footer from "./components/nav/Footer.vue";
+import Bread from "./components/nav/Bread.vue";
 
 //声明弹窗
 import Statement from "./components/form/Statement.vue";
@@ -27,6 +28,7 @@ import Statement from "./components/form/Statement.vue";
 
         <el-container style="min-height: 450px">
           <el-main>
+            <Bread></Bread>
             <router-view></router-view>  <!--这里是路由区域，点击连接会在这里显示子页面-->
           </el-main>
 
@@ -41,5 +43,6 @@ import Statement from "./components/form/Statement.vue";
 </template>
 
 <style scoped>
+
 
 </style>
