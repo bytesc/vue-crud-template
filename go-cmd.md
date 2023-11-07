@@ -17,6 +17,6 @@ go get -u github.com/gin-gonic/gin
 
 ### 运行
 ```bash
-go build main.go
-
+go build main.go # 单个文件
+go build # 整个文件夹
 ```
