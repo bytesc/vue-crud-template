@@ -1,4 +1,4 @@
-package connect_db
+package mysql_db
 
 //package main
 
