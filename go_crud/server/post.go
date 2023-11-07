@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-crud/mysql_db"
+	"go_crud/mysql_db"
 	"gorm.io/gorm"
 )
 

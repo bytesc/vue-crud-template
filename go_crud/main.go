@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-crud/mysql_db"
-	"go-crud/server"
+	"go_crud/mysql_db"
+	"go_crud/server"
 )
 
 func main() {
