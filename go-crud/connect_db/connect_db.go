@@ -10,22 +10,6 @@ import (
 	"time"
 )
 
-// CrudList gorm结构体
-type CrudList struct {
-	gorm.Model // 引入模板结构体
-	//ID        uint `gorm:"primarykey"`
-	//CreatedAt time.Time
-	//UpdatedAt time.Time
-	//DeletedAt DeletedAt `gorm:"index"`
-	Name     string `gorm:"type: varchar(20); not null" binding:"required" json:"name" `
-	Level    string `gorm:"type: varchar(20);" json:"level"`
-	Email    string `gorm:"type: varchar(50);" json:"email"`
-	Phone    string `gorm:"type: varchar(20);" json:"phone"`
-	Birthday string `gorm:"type: varchar(20);" json:"birthday"`
-	Address  string `gorm:"type: varchar(200);" json:"address"`
-	// 变量名要大写，才public，可以被gorm获取解析
-}
-
 func ConnectToDatabase() (*gorm.DB, error) {
 	//链接数据库
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
@@ -54,6 +38,10 @@ func ConnectToDatabase() (*gorm.DB, error) {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	return db, err
+}
+
+func init() {
+
 }
 
 func main() {
