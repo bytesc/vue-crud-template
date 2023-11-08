@@ -264,6 +264,17 @@ let TableData = ref([
 
 // 方法
 
+import {request} from "../../utils/requests.js";
+const getTableData = async (cur = 1)=>{
+  // let res= request.get("/list",{
+  //   pageSize:10,
+  //   pageNum:cur
+  // })
+  let res= await request.get(`/list/?pageSize=${10}&pageNum=${cur}`)
+  console.log(res)
+}
+// getTableData()
+
 </script>
 
 <!--<style scoped>-->

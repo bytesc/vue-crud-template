@@ -46,3 +46,8 @@ import Statement from "./components/form/Statement.vue";
 
 
 </style>
+
+<script>
+
+
+</script>

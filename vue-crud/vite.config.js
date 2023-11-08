@@ -5,7 +5,14 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server:{
-    port : 8080 //指定部署端口号
+    port : 8086, //指定部署端口号
+    proxy:{
+      "/user":{  //代理解决跨域
+        target:"http://127.0.0.1:8088/"
+      }
+    }
   },
   base: "./" //打包相对路径
 })
+
+
