@@ -7,7 +7,7 @@ import (
 )
 
 func DeletePOST(r *gin.Engine, db *gorm.DB) {
-	r.POST("/user/delete/:id", func(c *gin.Context) {
+	r.POST("api/user/delete/:id", func(c *gin.Context) {
 		var data []mysql_db.CrudList //切片类型，查询结果列表
 		id := c.Param("id")          //接收路径参数
 		// c.Query()  //接收查询参数

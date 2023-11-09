@@ -7,7 +7,7 @@ import (
 )
 
 func UpdatePOST(r *gin.Engine, db *gorm.DB) {
-	r.POST("user/update/:id/", func(c *gin.Context) {
+	r.POST("api/user/update/:id/", func(c *gin.Context) {
 		var data mysql_db.CrudList
 		id := c.Param("id") //接收路径参数
 		// c.Query()  //接收查询参数

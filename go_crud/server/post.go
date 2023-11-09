@@ -7,7 +7,7 @@ import (
 )
 
 func AddPOST(r *gin.Engine, db *gorm.DB) {
-	r.POST("/user/add", func(c *gin.Context) {
+	r.POST("api/user/add", func(c *gin.Context) {
 		var listRes mysql_db.CrudList
 		err := c.ShouldBindJSON(&listRes) //数据校验
 		if err != nil {                   //数据错

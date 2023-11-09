@@ -40,6 +40,11 @@ func ConnectToDatabase() (*gorm.DB, error) {
 	return db, err
 }
 
+func CreateDB(db *gorm.DB, model *any) error {
+	err := db.AutoMigrate(model)
+	return err
+}
+
 func init() {
 
 }

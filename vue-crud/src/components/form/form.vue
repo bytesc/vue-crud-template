@@ -70,13 +70,13 @@
 
     <div>
     </div>
-      <el-pagination background layout="prev, pager, next"
-                     style="display: flex;justify-content: center; margin: 10px"
-                     :total="total"
-                     :page-size="pageSize"
-                     :current-page="curPage"
-                     @current-change="handleChangePage"
-      />
+<!--      <el-pagination background layout="prev, pager, next"-->
+<!--                     style="display: flex;justify-content: center; margin: 10px"-->
+<!--                     :total="total"-->
+<!--                     :page-size="pageSize"-->
+<!--                     :current-page="curPage"-->
+<!--                     @current-change="handleChangePage"-->
+<!--      />-->
       <el-pagination
           background layout="total, sizes, prev, pager, next, jumper"
           style="display: flex;justify-content: center; margin: 10px"
@@ -284,9 +284,9 @@ let TableData = ref([
 
 // 方法
 
-let total = ref(10)
+let total = ref(1)
 let curPage = ref(1)
-let pageSize= ref(2)
+let pageSize= ref(20)
 
 import {request} from "../../utils/requests.js";
 const getTableData = async (cur = 1)=>{
@@ -296,8 +296,9 @@ const getTableData = async (cur = 1)=>{
   // })
   let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
   console.log(res)
+  total.value = res.total
 }
-// getTableData()
+getTableData()
 
 const handleChangePage = (val)=>{
     getTableData(val)

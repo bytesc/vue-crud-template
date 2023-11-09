@@ -16,7 +16,7 @@ func PingGET(r *gin.Engine) {
 }
 
 func QueryGET(r *gin.Engine, db *gorm.DB) {
-	r.GET("user/list/:name", func(c *gin.Context) {
+	r.GET("api/user/list/:name", func(c *gin.Context) {
 		name := c.Param("name")
 		var dataList []mysql_db.CrudList
 		db.Where("name = ?", name).Find(&dataList)
@@ -38,7 +38,7 @@ func QueryGET(r *gin.Engine, db *gorm.DB) {
 
 // QueryPageGET 分页查询
 func QueryPageGET(r *gin.Engine, db *gorm.DB) {
-	r.GET("user/list", func(c *gin.Context) {
+	r.GET("api/user/list", func(c *gin.Context) {
 		var dataList []mysql_db.CrudList
 		var pageSize, pageNum int
 		pageSizeStr := c.Query("pageSize")

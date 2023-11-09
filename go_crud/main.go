@@ -31,7 +31,7 @@ func main() {
 
 	server.QueryPageGET(r, db)
 
-	r.Run("0.0.0.0:8080") // 监听并在 0.0.0.0:8080 上启动服务
+	r.Run("0.0.0.0:8088") // 监听并在 0.0.0.0:8080 上启动服务
 	// http://127.0.0.1:8080/ping
 	//fmt.Println(r)
 
