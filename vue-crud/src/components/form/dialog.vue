@@ -70,7 +70,6 @@ const handleEdit = ()=>{
   dialogFormVisible.value=true
   // console.log(props.TableRow)
   form = ref({
-    id:props.TableRow.id,
     name: props.TableRow.name,
     phone: props.TableRow.phone,
     email: props.TableRow.email,
@@ -82,7 +81,6 @@ const handleEdit = ()=>{
 const formLabelWidth = '140px'
 
 let form = ref({
-  id:"",
   name: '',
   phone:"",
   email:"",

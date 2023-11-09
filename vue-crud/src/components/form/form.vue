@@ -51,7 +51,7 @@
       <el-table-column type="selection" width="55" />
 <!--      <el-table-column fixed  prop="name" label="Name" width="120" />-->
       <el-table-column prop="name" label="Name" width="120"  sortable/>
-      <el-table-column prop="id" label="id" width="120"  sortable/>
+      <el-table-column prop="ID" label="ID" width="120"  sortable/>
       <el-table-column prop="level" label="Level" width="120"  sortable/>
       <el-table-column prop="email" label="email" width="240"  sortable/>
       <el-table-column prop="phone" label="phone" width="160"  sortable/>
@@ -110,7 +110,14 @@ import {Delete} from "@element-plus/icons-vue"; //引入icon
 // })
 
 let TableData = ref([
-
+  {
+    ID:"",
+    name: '',
+    phone:"",
+    email:"",
+    birthday: '',
+    level: '',
+  }
 ])
 
 // 方法
