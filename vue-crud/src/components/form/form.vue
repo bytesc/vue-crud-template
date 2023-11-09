@@ -146,6 +146,7 @@ const handleChangePage = (val)=>{
   getTableData(val)
 }
 const handleSizeChange = (val)=>{
+  getTableData(curPage.value)
   pageSize.value = val
 }
 
@@ -153,7 +154,7 @@ const handleSizeChange = (val)=>{
 // 单行删除
 const handleRowDelete = (id) =>{
   // console.log(row.id)
-  let index = TableData.value.findIndex((item) => item.id === id)
+  let index = TableData.value.findIndex((item) => item.ID === id)
   // console.log(index)
   TableData.value.splice(index,1)
 }
@@ -165,7 +166,7 @@ const handleSelectionChange = (val) => {
   // multipleSelection.value = val
   multipleSelection.value=[]
   val.forEach(item=>{
-    multipleSelection.value.push(item.id)
+    multipleSelection.value.push(item.ID)
   })
   // console.log(multipleSelection.value)
 }
@@ -214,7 +215,7 @@ const childEven=async (val, dialogType) => {
     //     item.birthday = val.birthday;
     //   }
     // });
-    let index = TableData.value.findIndex((item) => item.id === val.value.id)
+    let index = TableData.value.findIndex((item) => item.ID === val.value.ID)
     TableData.value[index] = val.value
   }
 }
