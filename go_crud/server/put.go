@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go_crud/mysql_db"
 	"gorm.io/gorm"
+	"strconv"
 )
 
 func UpdatePOST(r *gin.Engine, db *gorm.DB) {
@@ -11,41 +12,50 @@ func UpdatePOST(r *gin.Engine, db *gorm.DB) {
 		var data mysql_db.CrudList
 		id := c.Param("id") //接收路径参数
 		// c.Query()  //接收查询参数
-		db.Select("id").Where("id = ?", id).Find(&data) //数据库查找
-		if data.ID == 0 {
+		idInt, err := strconv.Atoi(id)
+		if err != nil {
 			c.JSON(200, gin.H{
-				"msg":  "修改失败，数据不存在",
-				"data": data,
+				"msg":  "id格式错误",
+				"data": err,
 				"code": "400",
 			})
 		} else {
-			err := c.ShouldBindJSON(&data)
-			if err != nil {
+			db.Select("id").Where("id = ?", idInt).Find(&data) //数据库查找
+			if data.ID == 0 {
 				c.JSON(200, gin.H{
-					"msg":  "修改失败，数据格式不正确",
-					"data": err,
+					"msg":  "修改失败，数据不存在",
+					"data": data,
 					"code": "400",
 				})
 			} else {
-				result := db.Where("id = ?", id).Updates(&data)
-				if result.RowsAffected == 0 {
+				err := c.ShouldBindJSON(&data)
+				if err != nil {
 					c.JSON(200, gin.H{
-						"msg":  "修改失败，零行变动",
-						"data": data,
-						"code": "400",
-					})
-				} else if result.Error != nil {
-					c.JSON(200, gin.H{
-						"msg":  "修改失败",
-						"data": result.Error,
+						"msg":  "修改失败，数据格式不正确",
+						"data": err,
 						"code": "400",
 					})
 				} else {
-					c.JSON(200, gin.H{
-						"msg":  "修改成功",
-						"data": data,
-						"code": "200",
-					})
+					result := db.Where("id = ?", idInt).Updates(&data)
+					if result.RowsAffected == 0 {
+						c.JSON(200, gin.H{
+							"msg":  "修改失败，零行变动",
+							"data": data,
+							"code": "400",
+						})
+					} else if result.Error != nil {
+						c.JSON(200, gin.H{
+							"msg":  "修改失败",
+							"data": result.Error,
+							"code": "400",
+						})
+					} else {
+						c.JSON(200, gin.H{
+							"msg":  "修改成功",
+							"data": data,
+							"code": "200",
+						})
+					}
 				}
 			}
 		}

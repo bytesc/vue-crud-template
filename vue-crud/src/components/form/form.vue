@@ -59,7 +59,7 @@
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
 <!-- 这里必须是#default="scope"，表示在子组件el-table-column中的插槽slot-->
-          <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.id)">
+          <el-button link type="danger" size="small" @click="handleRowDelete(scope.row.ID)">
             删除
           </el-button>
           <!--      子父组件传数据，父端-->
@@ -134,11 +134,11 @@ const getTableData = async (cur = 1)=>{
   // })
   let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
 
-  console.log(res)
+  // console.log(res)
   total.value = res.total
 
   TableData.value = res.list
-  console.log(TableData.value)
+  // console.log(TableData.value)
 }
 getTableData()
 
@@ -151,14 +151,6 @@ const handleSizeChange = (val)=>{
 }
 
 
-// 单行删除
-const handleRowDelete = (id) =>{
-  // console.log(row.id)
-  let index = TableData.value.findIndex((item) => item.ID === id)
-  // console.log(index)
-  TableData.value.splice(index,1)
-}
-
 //多行选择
 const multipleSelection = ref([])
 const handleSelectionChange = (val) => {
@@ -169,6 +161,16 @@ const handleSelectionChange = (val) => {
     multipleSelection.value.push(item.ID)
   })
   // console.log(multipleSelection.value)
+}
+
+// 单行删除
+const handleRowDelete = async (id) => {
+  // let index = TableData.value.findIndex((item) => item.ID === id)
+  // TableData.value.splice(index,1)
+  // console.log(id)
+  await request.post(`/user/delete/${id}`,{
+  })
+  await getTableData(curPage.value)
 }
 
 //多行删除

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_crud/mysql_db"
 	"gorm.io/gorm"
@@ -19,11 +20,12 @@ func DeletePOST(r *gin.Engine, db *gorm.DB) {
 				"code": "400",
 			})
 		} else {
-			err := db.Where("id = ?", id).Delete(&data) //删除对应数据
-			if err != nil {
+			result := db.Where("id = ?", id).Delete(&data) //删除对应数据
+			if result.Error != nil {
+				fmt.Println(result.Error)
 				c.JSON(200, gin.H{
 					"msg":  "删除失败",
-					"data": err,
+					"data": result.Error,
 					"code": "400",
 				})
 			} else {

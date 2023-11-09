@@ -12,7 +12,7 @@ func AddPOST(r *gin.Engine, db *gorm.DB) {
 		err := c.ShouldBindJSON(&listRes) //数据校验
 		if err != nil {                   //数据错
 			c.JSON(200, gin.H{
-				"msg":  "添加失败",
+				"msg":  "添加失败，数据校验未通过",
 				"data": err,
 				"code": "400",
 			})
