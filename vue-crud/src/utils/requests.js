@@ -6,7 +6,7 @@ import {ElMessage} from "element-plus";
 
 // 全局配置
 const service = axios.create({
-    baseURL:"/user",
+    baseURL:"/api",
     timeout:300,  //请求超时
 })
 
@@ -35,7 +35,7 @@ function request(options){
     return service(options)
 }
 
-// 给request添加request.post()和.get()
+// 给request添加request.post()和.get(),从而给request传参（这一步作用是封装）
 ["get","post"].forEach(item=>{
     request[item] = (url,data) =>{
         return request({

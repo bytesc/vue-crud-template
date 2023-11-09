@@ -7,7 +7,7 @@ export default defineConfig({
   server:{
     port : 8086, //指定部署端口号
     proxy:{
-      "/user":{  //代理解决跨域
+      "/api":{  //代理解决跨域
         target:"http://127.0.0.1:8088/"
       }
     }

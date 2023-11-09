@@ -270,7 +270,7 @@ const getTableData = async (cur = 1)=>{
   //   pageSize:10,
   //   pageNum:cur
   // })
-  let res= await request.get(`/list/?pageSize=${10}&pageNum=${cur}`)
+  let res= await request.get(`user/list/?pageSize=${10}&pageNum=${cur}`)
   console.log(res)
 }
 // getTableData()
