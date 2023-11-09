@@ -19,9 +19,9 @@
         </template>
         <el-menu-item-group>
           <template #title><span>Group One</span></template>
-          <a href="#/file1"><el-menu-item index="1-1">item one</el-menu-item></a>
+          <a href="#/file1"><el-menu-item index="1-1">文件1</el-menu-item></a>
 <!-- 面链接需要加#，子页面会显示在app.vue的<router-view></router-view>区域-->
-          <a href="#/file2"><el-menu-item index="1-2">item two</el-menu-item></a>
+          <a href="#/file2"><el-menu-item index="1-2">文件2</el-menu-item></a>
         </el-menu-item-group>
         <el-menu-item-group title="Group Two">
           <el-menu-item index="1-3">item three</el-menu-item>
@@ -35,7 +35,7 @@
       <a href="#/form">
         <el-menu-item index="2">
           <el-icon><icon-menu /></el-icon>
-          <template #title>Navigator Two</template>
+          <template #title>表单</template>
         </el-menu-item>
       </a>
 

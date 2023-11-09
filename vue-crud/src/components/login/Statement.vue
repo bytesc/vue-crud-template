@@ -31,10 +31,6 @@ dialogFormVisible.value=true
 
 const formLabelWidth = '100px'
 
-const form = reactive({
-  name: '',
-  pwd:"",
-})
 </script>
 <style scoped>
 .dialog-footer button:first-child {

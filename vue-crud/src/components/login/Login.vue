@@ -1,0 +1,59 @@
+<template>
+<!--  <el-button text @click="dialogFormVisible = true">-->
+<!--    Click to open Dialog-->
+<!--  </el-button>-->
+  <el-dialog v-model="dialogFormVisible" title="用户登录"
+  :fullscreen="true" :center="true" :show-close="false" :align-center="true"
+  >
+    <el-row :justify="'center'">
+      <el-col :span="12">
+        <el-form :model="form" >
+          <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-input v-model="form.username" autocomplete="off"/>
+          </el-form-item>
+          <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-input v-model="form.password" autocomplete="off"
+                      type="password" :show-password="true"
+                      placeholder="Please input password"/>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">
+          Confirm
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+</template>
+
+<script lang="ts" setup>
+import {computed, onMounted, ref} from 'vue'
+
+const dialogFormVisible = ref(true)
+const formLabelWidth = '140px'
+
+const form = ref({
+  username: '',
+  password:""
+})
+
+</script>
+<style scoped>
+.el-button--text {
+  margin-right: 15px;
+}
+.el-select {
+  width: 300px;
+}
+.el-input {
+  width: 300px;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+</style>

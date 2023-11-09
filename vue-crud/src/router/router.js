@@ -1,13 +1,17 @@
 import { createRouter,createWebHistory,createWebHashHistory } from 'vue-router'
 
 // 注册页面路由
+import App from "../App.vue";
+
 import File1 from "../components/file/File1.vue";
 import File2 from "../components/file/File2.vue";
-import App from "../App.vue";
+
 import Form from "../components/form/form.vue"
 
 import Info1 from "../components/file/file_info/Info1.vue";
 import Detail1 from "../components/file/file_info/detail/Detail1.vue";
+
+import Login from "../components/login/Login.vue";
 
 // 注册页面路由
 const routes = [
@@ -17,7 +21,14 @@ const routes = [
         component: App,
         redirect:"/form",  // 重定向，相当于默认打开form子路由，否则会空白
     },
-    //以下三个是子路由
+    {
+        path:"/login",
+        component: Login,
+        name: "login",
+        meta:{
+            title:"登录",
+        }
+    },
     {
         path: '/form',
         component:Form,

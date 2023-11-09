@@ -28,7 +28,7 @@ func QueryGET(r *gin.Engine, db *gorm.DB) {
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"msg":  "成功",
+				"msg":  "查询成功",
 				"data": dataList,
 				"code": "200",
 			})
@@ -83,7 +83,7 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			})
 		} else {
 			c.JSON(200, gin.H{
-				"msg": "成功",
+				"msg": "查询成功",
 				"data": gin.H{
 					"list":     dataList,
 					"total":    total,

@@ -13,8 +13,10 @@
     <div class="flex-grow" />
     <el-menu-item index="1">Processing Center</el-menu-item>
     <el-sub-menu index="2">
-      <template #title>Workspace</template>
-      <el-menu-item index="2-1">item one</el-menu-item>
+      <template #title><el-icon><Tools /></el-icon>操作</template>
+      <a  href="/#/login">
+        <el-menu-item index="2-1"><el-icon><UserFilled /></el-icon>登录</el-menu-item>
+      </a>
       <el-menu-item index="2-2">item two</el-menu-item>
       <el-menu-item index="2-3">item three</el-menu-item>
       <el-sub-menu index="2-4">
@@ -29,6 +31,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import {Tools, UserFilled} from "@element-plus/icons-vue";
 
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {

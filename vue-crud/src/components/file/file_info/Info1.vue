@@ -20,7 +20,7 @@ let hasChildRoute = ref(false)
 //通过路由数量route.matched.length判断是否有子路由
 watch(() => route.matched, () => {
   hasChildRoute.value = route.matched.length > 2
-  console.log(route.matched.length)
+  // console.log(route.matched.length)
 })
 
 </script>
