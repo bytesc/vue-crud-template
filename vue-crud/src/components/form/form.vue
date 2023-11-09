@@ -69,8 +69,25 @@
     </el-table>
 
     <div>
-
     </div>
+      <el-pagination background layout="prev, pager, next"
+                     style="display: flex;justify-content: center; margin: 10px"
+                     :total="total"
+                     :page-size="pageSize"
+                     :current-page="curPage"
+                     @current-change="handleChangePage"
+      />
+      <el-pagination
+          background layout="total, sizes, prev, pager, next, jumper"
+          style="display: flex;justify-content: center; margin: 10px"
+          v-model:current-page="curPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[100, 200, 300, 400,500, 10000]"
+          :total="total"
+          @size-change="handleSizeChange"
+          @current-change="handleChangePage"
+      />
+
   </div>
 </template>
 
@@ -262,7 +279,14 @@ let TableData = ref([
 //浅拷贝
 // let TableDataCopy = Object.assign(TableData)
 
+
+
+
 // 方法
+
+let total = ref(10)
+let curPage = ref(1)
+let pageSize= ref(2)
 
 import {request} from "../../utils/requests.js";
 const getTableData = async (cur = 1)=>{
@@ -270,10 +294,17 @@ const getTableData = async (cur = 1)=>{
   //   pageSize:10,
   //   pageNum:cur
   // })
-  let res= await request.get(`user/list/?pageSize=${10}&pageNum=${cur}`)
+  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
   console.log(res)
 }
 // getTableData()
+
+const handleChangePage = (val)=>{
+    getTableData(val)
+}
+const handleSizeChange = (val)=>{
+  pageSize.value = val
+}
 
 </script>
 
