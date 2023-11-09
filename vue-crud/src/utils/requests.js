@@ -24,6 +24,7 @@ service.interceptors.response.use(res=>{
     }else if(code === "400"){
         // 后端返回失败
         ElMessage.error(msg)
+        console.log(res.data)
     }
 })
 

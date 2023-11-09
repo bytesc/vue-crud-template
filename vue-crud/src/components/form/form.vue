@@ -109,6 +109,38 @@ import {Delete} from "@element-plus/icons-vue"; //引入icon
 //   console.log(route.path) //获取路由
 // })
 
+let TableData = ref([
+
+])
+
+// 方法
+
+let total = ref(1)
+let curPage = ref(1)
+let pageSize= ref(20)
+
+import {request} from "../../utils/requests.js";
+const getTableData = async (cur = 1)=>{
+  // let res= request.get("/list",{
+  //   pageSize:10,
+  //   pageNum:cur
+  // })
+  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
+
+  console.log(res)
+  total.value = res.total
+
+  TableData.value = res.list
+  console.log(TableData.value)
+}
+getTableData()
+
+const handleChangePage = (val)=>{
+  getTableData(val)
+}
+const handleSizeChange = (val)=>{
+  pageSize.value = val
+}
 
 
 // 单行删除
@@ -142,9 +174,10 @@ const handleListDelete=()=>{
 
 // 父传子，父端
 // 对话框子组件事件，编辑或删除
-const childEven=(val, dialogType)=>{
+const childEven=async (val, dialogType) => {
   // console.log(val);
-  if (dialogType==="add"){
+  if (dialogType === "add") {
+    /* //这是前端操作
     let newRow = {...val.value}
     let newId = parseInt(
         TableData.value.reduce((max, current) => (
@@ -152,9 +185,19 @@ const childEven=(val, dialogType)=>{
         ).id)+1  // 找出现有最大id+1
     newRow.id = newId.toString()
     TableData.value.push(newRow)
+    */
+    console.log(val.value.name)
+    let res = await request.post("/user/add/", {
+      "name":val.value.name,
+      "phone":val.value.phone,
+      "email":val.value.email,
+      "birthday":val.value.birthday,
+      "level":val.value.level
+    })
+    await getTableData(curPage.value)
   }
 
-  if (dialogType==="edit"){
+  if (dialogType === "edit") {
     // TableData.forEach((item) => {
     //   if (item.id === val.id) {
     //     item.name = val.name;
@@ -164,7 +207,7 @@ const childEven=(val, dialogType)=>{
     //     item.birthday = val.birthday;
     //   }
     // });
-    let index = TableData.value.findIndex((item)=>item.id === val.value.id)
+    let index = TableData.value.findIndex((item) => item.id === val.value.id)
     TableData.value[index] = val.value
   }
 }
@@ -206,7 +249,8 @@ const tableRowClassName = ({row, index})=>{
       else{return 'hidden-row'}
     }
     if (searchModeValue.value==="id"){
-      if (row.id.toLowerCase().match(QueryInput.value.toLowerCase())) {
+      console.log(row)
+      if (row.ID.toString().toLowerCase().match(QueryInput.value.toLowerCase())) {
         return '';
       }
       else{return 'hidden-row'}
@@ -238,41 +282,7 @@ const tableRowClassName = ({row, index})=>{
 
 
 
-// reactive才可刷新
-let TableData = ref([
-  {
-    id:"1",
-    name: 'Tom',
-    level:"1",
-    email: '123456@xx.com',
-    phone:"18812341234",
-    birthday: "2023-10-12"
-  },
-  {
-    id:"2",
-    name: '小明',
-    level:"2",
-    email: 'z123456@xx.com',
-    phone:"18912341234",
-    birthday: "2022-10-12"
-  },
-  {
-    id:"3",
-    name: 'Alice',
-    level:"1",
-    email: 'y123456@xx.com',
-    phone:"13912341234",
-    birthday: "2023-1-9"
-  },
-  {
-    id:"4",
-    name: 'Jack',
-    level:"9",
-    email: 'x123456@xx.com',
-    phone:"18012341234",
-    birthday: "2023-8-22"
-  },
-])
+
 // 深拷贝
 // let copiedData = JSON.parse(JSON.stringify(TableData))
 // let TableDataCopy = ref(copiedData)
@@ -280,32 +290,6 @@ let TableData = ref([
 // let TableDataCopy = Object.assign(TableData)
 
 
-
-
-// 方法
-
-let total = ref(1)
-let curPage = ref(1)
-let pageSize= ref(20)
-
-import {request} from "../../utils/requests.js";
-const getTableData = async (cur = 1)=>{
-  // let res= request.get("/list",{
-  //   pageSize:10,
-  //   pageNum:cur
-  // })
-  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
-  console.log(res)
-  total.value = res.total
-}
-getTableData()
-
-const handleChangePage = (val)=>{
-    getTableData(val)
-}
-const handleSizeChange = (val)=>{
-  pageSize.value = val
-}
 
 </script>
 

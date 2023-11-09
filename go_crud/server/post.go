@@ -16,6 +16,7 @@ func AddPOST(r *gin.Engine, db *gorm.DB) {
 				"data": err,
 				"code": "400",
 			})
+			//fmt.Println(err)
 		} else {
 			// 数据库操作，insert
 			db.Create(&listRes)
