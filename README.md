@@ -1,8 +1,8 @@
-# go-crud-template
+# vue-crud-template
 
 ✨基于和 vue3, axios 和 Go, gorm, gin 和 MySQL  的简单信息管理系统模板✨📌含完整前后端：信息管理系统模板，后台管理系统模板，数据库管理系统模板。实现对数据库最基本的增删改查（CRUD）。📌前后端分离
 
-📌[配套后端项目地址]()
+📌[配套后端项目地址](https://github.com/bytesc/go-crud-template)
 
 [个人网站：www.bytesc.top](http://www.bytesc.top) 
 
@@ -83,7 +83,7 @@ export default defineConfig({
 - `port` 为前端的运行端口
 - `target` 后端服务器 url
 
-如果希望显示数据，需要用到配套的后端项目📌[配套后端项目地址]()
+如果希望显示数据，需要用到配套的后端项目📌[配套后端项目地址](https://github.com/bytesc/go-crud-template)
 
 ### 项目打包
 
