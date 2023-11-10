@@ -9,6 +9,7 @@ import (
 
 func UpdatePOST(r *gin.Engine, db *gorm.DB) {
 	r.POST("api/user/update/:id/", func(c *gin.Context) {
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
 		var data mysql_db.CrudList
 		id := c.Param("id") //接收路径参数
 		// c.Query()  //接收查询参数
@@ -59,5 +60,6 @@ func UpdatePOST(r *gin.Engine, db *gorm.DB) {
 				}
 			}
 		}
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
 	})
 }

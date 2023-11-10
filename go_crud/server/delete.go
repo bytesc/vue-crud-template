@@ -9,8 +9,9 @@ import (
 
 func DeletePOST(r *gin.Engine, db *gorm.DB) {
 	r.POST("api/user/delete/:id", func(c *gin.Context) {
-		var data []mysql_db.CrudList //切片类型，查询结果列表
-		id := c.Param("id")          //接收路径参数
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
+		var data []mysql_db.CrudList                //切片类型，查询结果列表
+		id := c.Param("id")                         //接收路径参数
 		// c.Query()  //接收查询参数
 		db.Where("id = ?", id).Find(&data) //数据库查找
 		if data == nil {                   //没有查到
@@ -36,6 +37,6 @@ func DeletePOST(r *gin.Engine, db *gorm.DB) {
 				})
 			}
 		}
-
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
 	}) //delete请求也可
 }

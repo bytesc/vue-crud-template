@@ -18,9 +18,9 @@ func PingGET(r *gin.Engine) {
 
 func QueryGET(r *gin.Engine, db *gorm.DB) {
 	r.GET("api/user/list/:name", func(c *gin.Context) {
+		db = db.Session(&gorm.Session{NewDB: true})
 		name := c.Param("name")
 		var dataList []mysql_db.CrudList
-		db = db.Session(&gorm.Session{NewDB: true})
 		db.Where("name = ?", name).Find(&dataList)
 		if len(dataList) == 0 { //没有查到
 			c.JSON(200, gin.H{
@@ -36,11 +36,13 @@ func QueryGET(r *gin.Engine, db *gorm.DB) {
 			})
 		}
 	})
+	db = db.Session(&gorm.Session{NewDB: true})
 }
 
 // QueryPageGET 分页查询
 func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 	r.GET("api/user/list/", func(c *gin.Context) {
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
 		var dataList []mysql_db.CrudList
 		var pageSize, pageNum int
 		pageSizeStr := c.Query("pageSize")
@@ -73,7 +75,6 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			pageNum = 1
 		}
 
-		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
 		db = db.Model(dataList)
 		allQueries := c.Request.URL.Query()
 		for key, values := range allQueries {
@@ -106,4 +107,5 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			})
 		}
 	})
+	db = db.Session(&gorm.Session{NewDB: true})
 }
