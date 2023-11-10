@@ -120,6 +120,37 @@ let TableData = ref([
   }
 ])
 
+const searchModeValue = ref('id')
+const searchModeOptions = [
+  {
+    value: 'ID',
+    label: '按 id',
+  },
+  {
+    value: 'name',
+    label: '按名字',
+  },
+  {
+    value: 'phone',
+    label: '按手机号',
+  },
+  {
+    value: 'email',
+    label: '按邮箱',
+  },
+  {
+    value: 'level',
+    label: '按用户等级',
+    disabled: false
+  },
+  {
+    value: 'birthday',
+    label: '按生日',
+    disabled: false
+  }
+]
+
+let QueryInput = ref("")
 // 方法
 
 let total = ref(1)
@@ -127,27 +158,28 @@ let curPage = ref(1)
 let pageSize= ref(20)
 
 import {request} from "../../utils/requests.js";
-const getTableData = async (cur = 1)=>{
+const getTableData = async ()=>{
   // let res= request.get("/list",{
   //   pageSize:10,
   //   pageNum:cur
   // })
-  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
-
+  // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
+  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${curPage.value}&${searchModeValue.value}=${QueryInput.value}`)
   // console.log(res)
   total.value = res.total
-
   TableData.value = res.list
   // console.log(TableData.value)
 }
 getTableData()
 
 const handleChangePage = (val)=>{
-  getTableData(val)
+  curPage.value=val
+  getTableData()
 }
 const handleSizeChange = (val)=>{
-  getTableData(curPage.value)
   pageSize.value = val
+  curPage.value=1
+  getTableData()
 }
 
 
@@ -170,7 +202,7 @@ const handleRowDelete = async (id) => {
   // console.log(id)
   await request.post(`/user/delete/${id}`,{
   })
-  await getTableData(curPage.value)
+  await getTableData()
 }
 
 //多行删除
@@ -224,48 +256,14 @@ const childEven=async (val, dialogType) => {
       ...val.value
     })
   }
-  await getTableData(curPage.value)
+  await getTableData()
 }
-
-const searchModeValue = ref('id')
-const searchModeOptions = [
-  {
-    value: 'ID',
-    label: '按 id',
-  },
-  {
-    value: 'name',
-    label: '按名字',
-  },
-  {
-    value: 'phone',
-    label: '按手机号',
-  },
-  {
-    value: 'email',
-    label: '按邮箱',
-  },
-  {
-    value: 'level',
-    label: '按用户等级',
-    disabled: false
-  },
-  {
-    value: 'birthday',
-    label: '按生日',
-    disabled: false
-  }
-]
-
-let QueryInput = ref("")
 
 
 //后端查询
 const HandleQuery = async ()=>{
-  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${curPage.value}&${searchModeValue.value}=${QueryInput.value}`)
-  console.log(res)
-  total.value = res.total
-  TableData.value = res.list
+  curPage.value=1
+  await getTableData()
 }
 
 //前端查询
