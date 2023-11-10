@@ -9,6 +9,7 @@ npm -v 9.5.0
 
 ### 新建项目
 ```bash
+# npm create vue@latest
 vue create vue-crud
 >vite
 >js
