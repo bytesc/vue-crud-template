@@ -13,7 +13,7 @@ func AddPOST(r *gin.Engine, db *gorm.DB) {
 		if err != nil {                   //数据错
 			c.JSON(200, gin.H{
 				"msg":  "添加失败，数据校验未通过",
-				"data": err,
+				"data": err.Error(),
 				"code": "400",
 			})
 			//fmt.Println(err)

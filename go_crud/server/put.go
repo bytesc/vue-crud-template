@@ -32,7 +32,7 @@ func UpdatePOST(r *gin.Engine, db *gorm.DB) {
 				if err != nil {
 					c.JSON(200, gin.H{
 						"msg":  "修改失败，数据格式不正确",
-						"data": err,
+						"data": err.Error(),
 						"code": "400",
 					})
 				} else {

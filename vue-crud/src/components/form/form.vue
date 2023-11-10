@@ -24,7 +24,7 @@
                   :disabled="item.disabled"
               />
             </el-select>
-            <!--        <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>-->
+                    <el-button type="primary" style="margin: 5px;" @click="HandleQuery"><el-icon><Search /></el-icon></el-button>
           </el-row>
         </el-col>
         <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
@@ -95,7 +95,7 @@
 import Dialog from "./dialog.vue" //对话框组件
 import {computed, ref} from "vue";
 
-import {Delete} from "@element-plus/icons-vue"; //引入icon
+import {Delete, Search} from "@element-plus/icons-vue"; //引入icon
 
 // import { useRoute } from 'vue-router'
 // const route = useRoute()
@@ -196,7 +196,7 @@ const childEven=async (val, dialogType) => {
     newRow.id = newId.toString()
     TableData.value.push(newRow)
     */
-    console.log(val.value.name)
+    // console.log(val.value.name)
     let res = await request.post("/user/add/", {
       "name":val.value.name,
       "phone":val.value.phone,
@@ -204,7 +204,6 @@ const childEven=async (val, dialogType) => {
       "birthday":val.value.birthday,
       "level":val.value.level
     })
-    await getTableData(curPage.value)
   }
 
   if (dialogType === "edit") {
@@ -217,15 +216,21 @@ const childEven=async (val, dialogType) => {
     //     item.birthday = val.birthday;
     //   }
     // });
+    /* //前端修改
     let index = TableData.value.findIndex((item) => item.ID === val.value.ID)
     TableData.value[index] = val.value
+     */
+    await request.post(`user/update/${val.value.ID}`,{
+      ...val.value
+    })
   }
+  await getTableData(curPage.value)
 }
 
 const searchModeValue = ref('id')
 const searchModeOptions = [
   {
-    value: 'id',
+    value: 'ID',
     label: '按 id',
   },
   {
@@ -233,8 +238,12 @@ const searchModeOptions = [
     label: '按名字',
   },
   {
-    value: 'phone_email',
-    label: '按手机号邮箱号',
+    value: 'phone',
+    label: '按手机号',
+  },
+  {
+    value: 'email',
+    label: '按邮箱',
   },
   {
     value: 'level',
@@ -250,16 +259,32 @@ const searchModeOptions = [
 
 let QueryInput = ref("")
 
+
+//后端查询
+const HandleQuery = async ()=>{
+  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${curPage.value}&${searchModeValue.value}=${QueryInput.value}`)
+  console.log(res)
+  total.value = res.total
+  TableData.value = res.list
+}
+
+//前端查询
 /*控制行可见*/
 const tableRowClassName = ({row, index})=>{
-    if (searchModeValue.value==="phone_email"){
-      if (row.phone.toLowerCase().match(QueryInput.value.toLowerCase()) || row.email.toLowerCase().match(QueryInput.value.toLowerCase())) {
+    if (searchModeValue.value==="phone"){
+      if (row.phone.toLowerCase().match(QueryInput.value.toLowerCase())) {
         return '';
       }
       else{return 'hidden-row'}
     }
+  if (searchModeValue.value==="email"){
+    if (row.email.toLowerCase().match(QueryInput.value.toLowerCase())) {
+      return '';
+    }
+    else{return 'hidden-row'}
+  }
     if (searchModeValue.value==="id"){
-      console.log(row)
+      // console.log(row)
       if (row.ID.toString().toLowerCase().match(QueryInput.value.toLowerCase())) {
         return '';
       }
@@ -285,6 +310,7 @@ const tableRowClassName = ({row, index})=>{
   }
     return ''
 }
+
 
     // reactive刷新方法
     // TableData.value.splice(0,TableData.value.length)

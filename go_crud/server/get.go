@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_crud/mysql_db"
 	"gorm.io/gorm"
@@ -19,6 +20,7 @@ func QueryGET(r *gin.Engine, db *gorm.DB) {
 	r.GET("api/user/list/:name", func(c *gin.Context) {
 		name := c.Param("name")
 		var dataList []mysql_db.CrudList
+		db = db.Session(&gorm.Session{NewDB: true})
 		db.Where("name = ?", name).Find(&dataList)
 		if len(dataList) == 0 { //没有查到
 			c.JSON(200, gin.H{
@@ -38,7 +40,7 @@ func QueryGET(r *gin.Engine, db *gorm.DB) {
 
 // QueryPageGET 分页查询
 func QueryPageGET(r *gin.Engine, db *gorm.DB) {
-	r.GET("api/user/list", func(c *gin.Context) {
+	r.GET("api/user/list/", func(c *gin.Context) {
 		var dataList []mysql_db.CrudList
 		var pageSize, pageNum int
 		pageSizeStr := c.Query("pageSize")
@@ -50,7 +52,7 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			if err != nil {
 				c.JSON(200, gin.H{
 					"msg":  "查询失败，pageNum参数格式错误",
-					"data": err,
+					"data": err.Error(),
 					"code": "400",
 				})
 			}
@@ -63,7 +65,7 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			if err != nil {
 				c.JSON(200, gin.H{
 					"msg":  "查询失败，pageSize参数格式错误",
-					"data": err,
+					"data": err.Error(),
 					"code": "400",
 				})
 			}
@@ -71,8 +73,18 @@ func QueryPageGET(r *gin.Engine, db *gorm.DB) {
 			pageNum = 1
 		}
 
-		var total int64 //保存数据调数
-		db.Model(dataList).Count(&total).Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&dataList)
+		db = db.Session(&gorm.Session{NewDB: true}) //必须清空上次遗留的链式条件
+		db = db.Model(dataList)
+		allQueries := c.Request.URL.Query()
+		for key, values := range allQueries {
+			if key != "pageSize" && key != "pageNum" {
+				db.Where(key+" LIKE ?", "%"+values[0]+"%")
+				fmt.Println(key, values)
+			}
+		}
+
+		var total int64 //保存数据条数
+		db.Count(&total).Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&dataList)
 		//limit(-1)表示查询全部数据，offset表示跳过多少条
 
 		if len(dataList) == 0 { //没有查到
