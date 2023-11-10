@@ -33,15 +33,19 @@ function request(options){
     if(options.method.toLowerCase() === "get"){
         options.params = options.data
     }
-    return service(options)
+    return service({
+        ...options,
+        headers: options.headers,  // 在这里设置headers
+    })
 }
 
 // 给request添加request.post()和.get(),从而给request传参（这一步作用是封装）
 ["get","post"].forEach(item=>{
-    request[item] = (url,data) =>{
+    request[item] = (url,data,headers) =>{
         return request({
             url,
             data,
+            headers,
             method:item
         })
     }
