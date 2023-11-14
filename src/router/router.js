@@ -12,6 +12,7 @@ import Info1 from "../components/file/file_info/Info1.vue";
 import Detail1 from "../components/file/file_info/detail/Detail1.vue";
 
 import Login from "../components/login/Login.vue";
+import Signup from "../components/login/Signup.vue";
 
 // 注册页面路由
 const routes = [
@@ -27,6 +28,14 @@ const routes = [
         name: "login",
         meta:{
             title:"登录",
+        }
+    },
+    {
+        path:"/signup",
+        component: Signup,
+        name: "signup",
+        meta:{
+            title:"注册",
         }
     },
     {
