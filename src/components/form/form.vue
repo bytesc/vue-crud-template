@@ -164,7 +164,7 @@ const getTableData = async ()=>{
   //   pageNum:cur
   // })
   // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
-  let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${curPage.value}&${searchModeValue.value}=${QueryInput.value}`)
+  let res= await request.get(`crud/list/?pageSize=${pageSize.value}&pageNum=${curPage.value}&${searchModeValue.value}=${QueryInput.value}`)
   // console.log(res)
   total.value = res.total
   TableData.value = res.list
@@ -200,7 +200,7 @@ const handleRowDelete = async (id) => {
   // let index = TableData.value.findIndex((item) => item.ID === id)
   // TableData.value.splice(index,1)
   // console.log(id)
-  await request.post(`/user/delete/${id}`,{
+  await request.post(`/crud/delete/${id}`,{
   })
   await getTableData()
 }
@@ -229,7 +229,7 @@ const childEven=async (val, dialogType) => {
     TableData.value.push(newRow)
     */
     // console.log(val.value.name)
-    let res = await request.post("/user/add/", {
+    let res = await request.post("/crud/add/", {
       "name":val.value.name,
       "phone":val.value.phone,
       "email":val.value.email,
@@ -252,7 +252,7 @@ const childEven=async (val, dialogType) => {
     let index = TableData.value.findIndex((item) => item.ID === val.value.ID)
     TableData.value[index] = val.value
      */
-    await request.post(`user/update/${val.value.ID}`,{
+    await request.post(`crud/update/${val.value.ID}`,{
       ...val.value
     })
   }
