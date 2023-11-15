@@ -20,11 +20,38 @@ service.interceptors.response.use(res=>{
     if (code === "200"){
         // 后端返回成功
         ElMessage.success(msg)
+        const newToken = res.headers['new_token'];
+        if(newToken!==localStorage.getItem('token') && typeof newToken !== 'undefined'){
+            ElMessage.success("token续签")
+            // console.log(res.data.data.token)
+            // 将新的token存储到浏览器的localStorage中
+            localStorage.setItem('token', newToken)
+            localStorage.setItem('name', res.data.data.name)
+        }
         return data
     }else if(code === "400"){
         // 后端返回失败
         ElMessage.error(msg)
         console.log(res.data)
+    }else if(code === "233"){
+        //登陆成功，签发了新token
+        ElMessage.success(msg)
+        const newToken = res.headers['new_token'];
+        console.log(newToken)
+        // console.log(res.data.data.token)
+        // 将新的token存储到浏览器的localStorage中
+        localStorage.setItem('token', newToken)
+        localStorage.setItem('name', res.data.data.name)
+        window.location.href = '#/'
+    } else if(code === "234"){
+        //注册成功
+        ElMessage.success(msg)
+        window.location.href = '#/login'
+    } else if(code === "444"){
+        //token无效
+        ElMessage.error(msg)
+        console.log(res.data)
+        window.location.href = '#/login'
     }
 })
 
@@ -33,6 +60,11 @@ function request(options){
     if(options.method.toLowerCase() === "get"){
         options.params = options.data
     }
+    // 从localStorage中获取token
+    const token = localStorage.getItem('token')
+    const name = localStorage.getItem('name')
+    // 将token添加到请求头中
+    options.headers = {...options.headers, 'token': token,'name':name}
     return service({
         ...options,
         headers: options.headers,  // 在这里设置headers
