@@ -12,10 +12,12 @@
         @open="handleOpen"
         @close="handleClose"
     >
+
+
       <el-sub-menu index="1">
         <template #title>
-          <el-icon><location /></el-icon>
-          <span>Navigator One</span>
+          <el-icon><icon-menu /></el-icon>
+          <span>Menu</span>
         </template>
         <el-menu-item-group>
           <template #title><span>Group One</span></template>
@@ -34,7 +36,7 @@
 
       <a href="#/form">
         <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
+          <el-icon><document /></el-icon>
           <template #title>表单</template>
         </el-menu-item>
       </a>
@@ -45,6 +47,11 @@
       </el-menu-item>
 
       <el-menu-item index="4">
+        <el-icon><location /></el-icon>
+        <template #title>Navigator Four</template>
+      </el-menu-item>
+
+      <el-menu-item index="5">
         <el-icon><setting /></el-icon>
         <template #title>Navigator Four</template>
       </el-menu-item>
