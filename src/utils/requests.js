@@ -26,7 +26,6 @@ service.interceptors.response.use(res=>{
             // console.log(res.data.data.token)
             // 将新的token存储到浏览器的localStorage中
             localStorage.setItem('token', newToken)
-            localStorage.setItem('name', res.data.data.name)
         }
         return data
     }else if(code === "400"){
@@ -37,21 +36,30 @@ service.interceptors.response.use(res=>{
         //登陆成功，签发了新token
         ElMessage.success(msg)
         const newToken = res.headers['new_token'];
-        console.log(newToken)
+        // console.log(newToken)
+        const newLongToken = res.headers['new_long_token'];
         // console.log(res.data.data.token)
         // 将新的token存储到浏览器的localStorage中
         localStorage.setItem('token', newToken)
-        localStorage.setItem('name', res.data.data.name)
+        localStorage.setItem('long_token', newLongToken)
+        localStorage.setItem('name', res.headers['name'])
         window.location.href = '#/'
-    } else if(code === "234"){
+    } else if(code === "234") {
         //注册成功
         ElMessage.success(msg)
-        window.location.href = '#/login'
+        window.location.href = '#/user'
+    }else if(code === "235"){
+        //登录注销成功
+        localStorage.setItem('token', "")
+        localStorage.setItem('long_token', "")
+        localStorage.setItem('name', "")
+        ElMessage.success(msg)
+        window.location.href = '#/user'
     } else if(code === "444"){
         //token无效
         ElMessage.error(msg)
         console.log(res.data)
-        window.location.href = '#/login'
+        window.location.href = '#/user'
     }
 })
 
@@ -62,9 +70,10 @@ function request(options){
     }
     // 从localStorage中获取token
     const token = localStorage.getItem('token')
+    const longToken = localStorage.getItem('long_token')
     const name = localStorage.getItem('name')
     // 将token添加到请求头中
-    options.headers = {...options.headers, 'token': token,'name':name}
+    options.headers = {...options.headers, 'token': token,'name':name,"long_token":longToken}
     return service({
         ...options,
         headers: options.headers,  // 在这里设置headers

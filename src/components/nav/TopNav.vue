@@ -13,11 +13,13 @@
     <div class="flex-grow" />
     <el-menu-item index="1">Processing Center</el-menu-item>
     <el-sub-menu index="2">
-      <template #title><el-icon><Tools /></el-icon>操作</template>
-      <a  href="/#/login">
+      <template #title><el-icon><Tools /></el-icon>{{ username }}</template>
+      <a  href="/#/login" v-if="username==='登录'">
         <el-menu-item index="2-1"><el-icon><UserFilled /></el-icon>登录</el-menu-item>
       </a>
-      <el-menu-item index="2-2">item two</el-menu-item>
+      <a @click="HandleLogout" v-else>
+        <el-menu-item index="2-2"><el-icon><UserFilled /></el-icon>注销</el-menu-item>
+      </a>
       <el-menu-item index="2-3">item three</el-menu-item>
       <el-sub-menu index="2-4">
         <template #title>item four</template>
@@ -30,13 +32,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
 import {Tools, UserFilled} from "@element-plus/icons-vue";
 
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
+
+const username = computed(() => localStorage.getItem('name') || '登录')
+
+import {request} from "../../utils/requests.js";
+const HandleLogout = ()=>{
+  let res = request.get(`/user/logout/${username.value}`,{
+  })
+}
+
 </script>
 
 <style>

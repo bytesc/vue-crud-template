@@ -11,8 +11,8 @@ import Form from "../components/form/form.vue"
 import Info1 from "../components/file/file_info/Info1.vue";
 import Detail1 from "../components/file/file_info/detail/Detail1.vue";
 
-import Login from "../components/login/Login.vue";
-import Signup from "../components/login/Signup.vue";
+import Login from "../components/user/Login.vue";
+import Signup from "../components/user/Signup.vue";
 
 // 注册页面路由
 const routes = [
@@ -23,7 +23,7 @@ const routes = [
         redirect:"/form",  // 重定向，相当于默认打开form子路由，否则会空白
     },
     {
-        path:"/login",
+        path:"/user",
         component: Login,
         name: "login",
         meta:{

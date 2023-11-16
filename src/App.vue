@@ -9,7 +9,7 @@ import Footer from "./components/nav/Footer.vue";
 import Bread from "./components/nav/Bread.vue";
 
 //声明弹窗
-import Statement from "./components/login/Statement.vue";
+import Statement from "./components/user/Statement.vue";
 </script>
 
 <template>
