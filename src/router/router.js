@@ -24,19 +24,25 @@ const routes = [
     },
     {
         path:"/user",
-        component: Login,
-        name: "login",
-        meta:{
-            title:"登录",
-        }
-    },
-    {
-        path:"/signup",
-        component: Signup,
-        name: "signup",
-        meta:{
-            title:"注册",
-        }
+        name:"user",
+        children: [
+            {
+                path:"login",
+                component: Login,
+                name: "login",
+                meta:{
+                    title:"登录",
+                }
+            },
+            {
+                path:"signup",
+                component: Signup,
+                name: "signup",
+                meta:{
+                    title:"注册",
+                }
+            },
+        ],
     },
     {
         path: '/form',

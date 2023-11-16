@@ -47,19 +47,19 @@ service.interceptors.response.use(res=>{
     } else if(code === "234") {
         //注册成功
         ElMessage.success(msg)
-        window.location.href = '#/user'
+        window.location.href = '#/user/login'
     }else if(code === "235"){
         //登录注销成功
         localStorage.setItem('token', "")
         localStorage.setItem('long_token', "")
         localStorage.setItem('name', "")
         ElMessage.success(msg)
-        window.location.href = '#/user'
+        window.location.href = '#/user/login'
     } else if(code === "444"){
         //token无效
         ElMessage.error(msg)
         console.log(res.data)
-        window.location.href = '#/user'
+        window.location.href = '#/user/login'
     }
 })
 

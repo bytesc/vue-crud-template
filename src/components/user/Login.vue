@@ -22,7 +22,7 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <a href="#/signup">
+        <a href="#/user/signup">
           <el-button>注册</el-button>
         </a>
         <el-button type="primary" @click="HandleLogin">
