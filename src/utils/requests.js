@@ -28,6 +28,7 @@ service.interceptors.response.use(res=>{
             // 将新的token存储到浏览器的localStorage中
             localStorage.setItem('token', newToken)
         }
+        store.commit('setName', localStorage.getItem("name"))
         return data
     }else if(code === "400"){
         // 后端返回失败

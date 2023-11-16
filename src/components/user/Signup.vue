@@ -9,13 +9,13 @@
       <el-col :span="12">
         <el-form :model="form" >
           <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="form.username" autocomplete="off"/>
+            <el-input v-model="form.username"/>
           </el-form-item>
-          <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input v-model="form.email" autocomplete="off"/>
+          <el-form-item label="邮箱" :label-width="formLabelWidth ">
+            <el-input v-model="form.email"/>
           </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input v-model="form.password" autocomplete="off"
+          <el-form-item label="密码" :label-width="formLabelWidth" >
+            <el-input v-model="form.password"
                       type="password" :show-password="true"
                       placeholder="Please input password"/>
           </el-form-item>
@@ -25,7 +25,9 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <a href="#/user/login">
+          <el-button>取消</el-button>
+        </a>
         <el-button type="primary" @click="HandleSignup">
           注册
         </el-button>
