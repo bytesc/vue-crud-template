@@ -50,12 +50,12 @@ npm install
 
 # npm run dev
 # npm install -D unplugin-vue-components unplugin-auto-import
+
 # npm install element-plus
 # npm install @element-plus/icons-vue
 
 # npm install vue-router@4
-# # npm install vuex
-
+# npm install vuex@next --save
 # npm install axios
 ```
 
@@ -99,10 +99,14 @@ npm run build
 ### 官方文档
 
 - [vue3](https://cn.vuejs.org/guide/quick-start.html)
+- [vite](https://cn.vitejs.dev/guide/)
+
 - [vue-router](https://router.vuejs.org/zh/)
 - [axios](https://www.axios-http.cn/docs/intro)
+- [vuex](https://vuex.vuejs.org/zh/guide/)
+
 - [element-plus](https://element-plus.org/zh-CN/)
-- [vite](https://cn.vitejs.dev/guide/)
+
 
 
 # 开源许可证

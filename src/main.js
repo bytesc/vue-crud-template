@@ -19,6 +19,10 @@ app.use(ElementPlus)
 import router from './router/router'
 app.use(router)
 
+// 把vuex册到应用
+import {store} from "./utils/store.js";
+app.use(store)
+
 app.mount('#app')
 
 

@@ -3,6 +3,7 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
 
+import {store} from "./store.js";
 
 // 全局配置
 const service = axios.create({
@@ -43,6 +44,8 @@ service.interceptors.response.use(res=>{
         localStorage.setItem('token', newToken)
         localStorage.setItem('long_token', newLongToken)
         localStorage.setItem('name', res.headers['name'])
+        //name 存到vuex
+        store.commit('setName', res.headers['name'])  // 设置 name
         window.location.href = '#/'
     } else if(code === "234") {
         //注册成功
@@ -53,6 +56,7 @@ service.interceptors.response.use(res=>{
         localStorage.setItem('token', "")
         localStorage.setItem('long_token', "")
         localStorage.setItem('name', "")
+        store.commit('setName', "")
         ElMessage.success(msg)
         window.location.href = '#/user/login'
     } else if(code === "444"){
@@ -76,7 +80,7 @@ function request(options){
     options.headers = {...options.headers, 'token': token,'name':name,"long_token":longToken}
     return service({
         ...options,
-        headers: options.headers,  // 在这里设置headers
+        // headers: options.headers,  // 在这里设置headers
     })
 }
 

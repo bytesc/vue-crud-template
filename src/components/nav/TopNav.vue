@@ -14,7 +14,7 @@
     <el-menu-item index="1">Processing Center</el-menu-item>
     <el-sub-menu index="2">
       <template #title><el-icon><Tools /></el-icon>{{ username }}</template>
-      <a  href="/#/user/login" v-if="username==='登录'">
+      <a  href="/#/user/login" v-if="username===''">
         <el-menu-item index="2-1"><el-icon><UserFilled /></el-icon>登录</el-menu-item>
       </a>
       <a @click="HandleLogout" v-else>
@@ -40,7 +40,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
-let username = computed(() => localStorage.getItem('name') || '登录')
+import { useStore } from 'vuex'
+const store = useStore()
+let username = computed(() => store.getters.getName || '')
 
 import {request} from "../../utils/requests.js";
 const HandleLogout = ()=>{
