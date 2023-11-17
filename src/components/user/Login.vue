@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, onMounted, ref} from 'vue'
+import {ref} from 'vue'
 import {request} from "../../utils/requests.js";
 
 const dialogFormVisible = ref(true)
@@ -45,10 +45,11 @@ const form = ref({
   password:""
 })
 
+import {rsaEncrypt} from "../../utils/rsa.js";
 const HandleLogin = async ()=>{
   let res = request.post("/user/login",{
     "name":form.value.username,
-    "password":form.value.password
+    "password":await rsaEncrypt(form.value.password)
   })
 }
 

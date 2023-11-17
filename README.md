@@ -57,6 +57,8 @@ npm install
 # npm install vue-router@4
 # npm install vuex@next --save
 # npm install axios
+
+# npm install jsencrypt --save
 ```
 
 ### 运行项目

@@ -35,7 +35,7 @@ service.interceptors.response.use(res=>{
         ElMessage.error(msg)
         console.log(res.data)
     }else if(code === "233"){
-        //登陆成功，签发了新token
+        //登陆成功，签发了token
         ElMessage.success(msg)
         const newToken = res.headers['new_token'];
         // console.log(newToken)
@@ -61,7 +61,7 @@ service.interceptors.response.use(res=>{
         ElMessage.success(msg)
         window.location.href = '#/user/login'
     } else if(code === "444"){
-        //token无效
+        //无效登录状态
         ElMessage.error(msg)
         console.log(res.data)
         window.location.href = '#/user/login'

@@ -49,10 +49,11 @@ const form = ref({
 })
 
 import {request} from "../../utils/requests.js";
+import {rsaEncrypt} from "../../utils/rsa.js";
 const HandleSignup = async ()=>{
   let res = request.post("/user/signup",{
     "name":form.value.username,
-    "password":form.value.password,
+    "password":await rsaEncrypt(form.value.password),
     "email":form.value.email
   })
 }
