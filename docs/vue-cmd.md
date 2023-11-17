@@ -47,13 +47,13 @@ router.js
 import { createRouter,createWebHistory,createWebHashHistory } from 'vue-router'
 
 // 注册页面路由
-import File1 from "../components/file/File1.vue";
-import File2 from "../components/file/File2.vue";
+import File1 from "../components/pages/Page1.vue";
+import File2 from "../components/pages/Page2.vue";
 import App from "../App.vue";
 import Form from "../components/form/form.vue"
 
-import Info1 from "../components/file/file_info/Info1.vue";
-import Detail1 from "../components/file/file_info/detail/Detail1.vue";
+import Info1 from "../components/pages/page_info/Info1.vue";
+import Detail1 from "../components/pages/page_info/detail/Detail1.vue";
 
 // 注册页面路由
 const routes = [

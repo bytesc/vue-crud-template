@@ -3,16 +3,18 @@ import { createRouter,createWebHistory,createWebHashHistory } from 'vue-router'
 // 注册页面路由
 import App from "../App.vue";
 
-import File1 from "../components/file/File1.vue";
-import File2 from "../components/file/File2.vue";
+import File1 from "../components/pages/Page1.vue";
+import File2 from "../components/pages/Page2.vue";
 
 import Form from "../components/form/form.vue"
 
-import Info1 from "../components/file/file_info/Info1.vue";
-import Detail1 from "../components/file/file_info/detail/Detail1.vue";
+import Info1 from "../components/pages/page_info/Info1.vue";
+import Detail1 from "../components/pages/page_info/detail/Detail1.vue";
 
 import Login from "../components/user/Login.vue";
 import Signup from "../components/user/Signup.vue";
+
+import FileUpload from "../components/files/FileUpload.vue";
 
 // 注册页面路由
 const routes = [
@@ -45,6 +47,23 @@ const routes = [
         ],
     },
     {
+        path:"/files",
+        name: "files",
+        // meta:{
+        //     title:"文件",
+        // },
+        children: [
+            {
+                path:"upload",
+                component: FileUpload,
+                name: "upload",
+                meta:{
+                      title:"文件上传",
+                }
+            },
+        ]
+    },
+    {
         path: '/form',
         component:Form,
         name: "form",
@@ -53,11 +72,11 @@ const routes = [
         }
     },
     {
-        path: '/file1',
+        path: '/page1',
         component:File1,
-        name: "file1",
+        name: "page1",
         meta:{
-            title:"文件1",
+            title:"页面1",
         },
         children: [   // 在<router-view></router-view>显示
             { path: 'info1', component: Info1, name:"info1" , // 子路由path不要加‘ / ’
@@ -75,11 +94,11 @@ const routes = [
         ],
     },
     {
-        path: '/file2',
+        path: '/page2',
         component:File2,
-        name: "file2",
+        name: "page2",
         meta:{
-            title:"文件2",
+            title:"页面2",
         },
     },
 ]

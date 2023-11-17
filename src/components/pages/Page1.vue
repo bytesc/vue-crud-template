@@ -1,6 +1,6 @@
 <template>
   <div style="text-align: center">
-    这是文件一 <a href="#/file1/info1">信息</a>
+    这是页面一 <a href="#/page1/info1">信息</a>
   </div>
   <router-view></router-view>
 </template>
