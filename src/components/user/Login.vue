@@ -9,12 +9,13 @@
       <el-col :span="12">
         <el-form :model="form" >
           <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="form.username" autocomplete="off"/>
+            <el-input v-model="form.username" autocomplete="off"
+                      placeholder="输入用户名"/>
           </el-form-item>
           <el-form-item label="密码" :label-width="formLabelWidth">
             <el-input v-model="form.password" autocomplete="off"
                       type="password" :show-password="true"
-                      placeholder="Please input password"/>
+                      placeholder="输入密码"/>
           </el-form-item>
         </el-form>
       </el-col>

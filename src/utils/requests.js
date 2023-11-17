@@ -8,7 +8,7 @@ import {store} from "./store.js";
 // 全局配置
 const service = axios.create({
     baseURL:"/api",
-    timeout:300,  //请求超时
+    timeout:1000,  //请求超时
 })
 
 // 响应拦截
@@ -34,6 +34,7 @@ service.interceptors.response.use(res=>{
         // 后端返回失败
         ElMessage.error(msg)
         console.log(res.data)
+        return data
     }else if(code === "233"){
         //登陆成功，签发了token
         ElMessage.success(msg)
@@ -48,10 +49,12 @@ service.interceptors.response.use(res=>{
         //name 存到vuex
         store.commit('setName', res.headers['name'])  // 设置 name
         window.location.href = '#/'
+        return data
     } else if(code === "234") {
         //注册成功
         ElMessage.success(msg)
         window.location.href = '#/user/login'
+        return data
     }else if(code === "235"){
         //登录注销成功
         localStorage.setItem('token', "")
@@ -60,11 +63,13 @@ service.interceptors.response.use(res=>{
         store.commit('setName', "")
         ElMessage.success(msg)
         window.location.href = '#/user/login'
+        return data
     } else if(code === "444"){
         //无效登录状态
         ElMessage.error(msg)
         console.log(res.data)
         window.location.href = '#/user/login'
+        return data
     }
 })
 
