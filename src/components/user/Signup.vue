@@ -62,6 +62,10 @@ const HandleSignup = async ()=>{
     ElMessage.error("用户名长度必须在 3 到 50 之间")
     return
   }
+  if(form.value.password.length<8 || form.value.password.length>50){
+    ElMessage.error("密码长度必须在 8 到 50 之间")
+    return
+  }
   if(form.value.password!=form.value.password_again){
     ElMessage.error("密码不一致")
     return

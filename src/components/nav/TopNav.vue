@@ -17,9 +17,14 @@
       <a  href="/#/user/login" v-if="username===''">
         <el-menu-item index="2-1"><el-icon><UserFilled /></el-icon>登录</el-menu-item>
       </a>
-      <a @click="HandleLogout" v-else>
-        <el-menu-item index="2-2"><el-icon><UserFilled /></el-icon>注销</el-menu-item>
-      </a>
+      <div v-else>
+        <a @click="HandleLogout" >
+          <el-menu-item index="2-1"><el-icon><UserFilled /></el-icon>注销</el-menu-item>
+        </a>
+        <a href="/#/user/change_pwd" >
+          <el-menu-item index="2-2"><el-icon><UserFilled /></el-icon>修改密码</el-menu-item>
+        </a>
+      </div>
       <el-menu-item index="2-3">item three</el-menu-item>
       <el-sub-menu index="2-4">
         <template #title>item four</template>

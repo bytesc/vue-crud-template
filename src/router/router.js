@@ -13,6 +13,7 @@ import Detail1 from "../components/pages/page_info/detail/Detail1.vue";
 
 import Login from "../components/user/Login.vue";
 import Signup from "../components/user/Signup.vue";
+import ChangePwd from "../components/user/ChangePwd.vue";
 
 import FileUpload from "../components/files/FileUpload.vue";
 
@@ -42,6 +43,14 @@ const routes = [
                 name: "signup",
                 meta:{
                     title:"注册",
+                }
+            },
+            {
+                path:"change_pwd",
+                component: ChangePwd,
+                name: "change_pwd",
+                meta:{
+                    title:"修改密码",
                 }
             },
         ],
