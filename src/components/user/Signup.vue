@@ -9,15 +9,20 @@
       <el-col :span="12">
         <el-form :model="form" >
           <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="form.username"/>
+            <el-input v-model="form.username" placeholder="username"/>
           </el-form-item>
           <el-form-item label="邮箱" :label-width="formLabelWidth ">
-            <el-input v-model="form.email"/>
+            <el-input v-model="form.email" placeholder="email"/>
           </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth" >
+          <el-form-item label="设置密码" :label-width="formLabelWidth" >
             <el-input v-model="form.password"
                       type="password" :show-password="true"
-                      placeholder="Please input password"/>
+                      placeholder="password"/>
+          </el-form-item>
+          <el-form-item label="确认密码" :label-width="formLabelWidth" >
+            <el-input v-model="form.password_again"
+                      type="password" :show-password="true"
+                      placeholder="password again"/>
           </el-form-item>
         </el-form>
       </el-col>
@@ -45,12 +50,22 @@ const formLabelWidth = '140px'
 const form = ref({
   username: '',
   email:"",
-  password:""
+  password:"",
+  password_again:""
 })
 
 import {request} from "../../utils/requests.js";
 import {rsaEncrypt} from "../../utils/rsa.js";
+import {ElMessage} from "element-plus";
 const HandleSignup = async ()=>{
+  if(form.value.username.length<3 || form.value.username.length>50){
+    ElMessage.error("用户名长度必须在 3 到 50 之间")
+    return
+  }
+  if(form.value.password!=form.value.password_again){
+    ElMessage.error("密码不一致")
+    return
+  }
   let res = request.post("/user/signup",{
     "name":form.value.username,
     "password":await rsaEncrypt(form.value.password),
