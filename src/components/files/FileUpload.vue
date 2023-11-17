@@ -1,10 +1,13 @@
 <template>
   <div style="margin: 20px;">
+    <h3 style="text-align: center">多文件上传</h3>
     <el-upload
-        class="upload-demo"
         drag
         :http-request="uploadFile"
         multiple
+        ref="uploadMul"
+        :on-exceed="handleExceed"
+        :auto-upload="false"
     >
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
       <div class="el-upload__text">
@@ -16,14 +19,62 @@
         </div>
       </template>
     </el-upload>
+    <el-button class="ml-3" type="success" @click="submitMulUpload">
+      upload to server
+    </el-button>
+  </div>
+
+  <div style="margin: 20px;">
+    <h3 style="text-align: center">单文件上传</h3>
+    <el-upload
+        ref="uploadSingle"
+        :http-request="uploadFile"
+        :limit="1"
+        :on-exceed="handleExceed"
+        :auto-upload="false"
+    >
+      <template #trigger>
+        <el-button type="primary">select file</el-button>
+      </template>
+      <template #tip>
+        <div class="el-upload__tip text-red">
+          limit 1 file, new file will cover the old file
+        </div>
+      </template>
+    </el-upload>
+    <el-button class="ml-3" type="success" @click="submitSingleUpload">
+      upload to server
+    </el-button>
   </div>
 
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import {request} from "../../utils/requests.js";
 import {UploadFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
+import {ref} from "vue";
+
+import { genFileId } from 'element-plus'
+import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+
+const uploadMul = ref<UploadInstance>()
+const uploadSingle = ref<UploadInstance>()
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+  uploadSingle.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  uploadSingle.value!.handleStart(file)
+}
+
+const submitSingleUpload = () => {
+  uploadSingle.value!.submit()
+}
+
+const submitMulUpload = () => {
+  uploadMul.value!.submit()
+}
 
 const uploadFile = async (file)=> {
   if(file.file.size > 1024 * 1024) { // 文件大小超过1mb
