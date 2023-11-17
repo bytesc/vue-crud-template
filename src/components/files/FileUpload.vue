@@ -8,6 +8,7 @@
         ref="uploadMul"
         :on-exceed="handleExceed"
         :auto-upload="false"
+        :before-upload="checkBeforeUpload"
     >
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
       <div class="el-upload__text">
@@ -50,7 +51,10 @@
 </template>
 
 <script lang="ts" setup>
+
+
 import {request} from "../../utils/requests.js";
+request.get("refresh")
 import {UploadFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
@@ -76,14 +80,18 @@ const submitMulUpload = () => {
   uploadMul.value!.submit()
 }
 
-const uploadFile = async (file)=> {
-  if(file.file.size > 1024 * 1024) { // 文件大小超过1mb
-    ElMessage.error('文件大小不能超过1mb');
-    return;
+const checkBeforeUpload =  (rawFile) => {
+  if(rawFile.size > 1024 * 1024 * 10) { // 文件大小超过1mb
+    ElMessage.error('文件大小不能超过10mb');
+    return false
   }
+  return true
+}
+
+const uploadFile = async (file)=> {
   const formData = new FormData();
   formData.append('file', file.file);
-  request.post("/files/upload",formData,{
+  let res = await request.post("/files/upload",formData,{
     'Content-Type': 'multipart/form-data',
   })
 }
