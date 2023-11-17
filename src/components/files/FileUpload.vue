@@ -32,6 +32,7 @@
         :http-request="uploadFile"
         :limit="1"
         :on-exceed="handleExceed"
+        :before-upload="checkBeforeUpload"
         :auto-upload="false"
     >
       <template #trigger>
@@ -65,7 +66,7 @@ import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 const uploadMul = ref<UploadInstance>()
 const uploadSingle = ref<UploadInstance>()
 
-const handleExceed: UploadProps['onExceed'] = (files) => {
+const handleExceed = (files) => {
   uploadSingle.value!.clearFiles()
   const file = files[0] as UploadRawFile
   file.uid = genFileId()
@@ -81,8 +82,8 @@ const submitMulUpload = () => {
 }
 
 const checkBeforeUpload =  (rawFile) => {
-  if(rawFile.size > 1024 * 1024 * 10) { // 文件大小超过1mb
-    ElMessage.error('文件大小不能超过10mb');
+  if(rawFile.size > 500 * 1024 ) {
+    ElMessage.error('文件大小不能超过500KB');
     return false
   }
   return true

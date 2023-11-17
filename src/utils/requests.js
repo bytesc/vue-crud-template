@@ -8,7 +8,7 @@ import {store} from "./store.js";
 // 全局配置
 const service = axios.create({
     baseURL:"/api",
-    timeout:1000,  //请求超时
+    timeout:10000,  //请求超时
 })
 
 // 响应拦截
