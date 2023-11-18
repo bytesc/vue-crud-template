@@ -9,6 +9,8 @@
         :on-exceed="handleExceed"
         :auto-upload="false"
         :before-upload="checkBeforeUpload"
+        :on-success="UploadSuccess"
+        :on-error="UploadError"
     >
       <el-icon class="el-icon--upload"><upload-filled /></el-icon>
       <div class="el-upload__text">
@@ -53,9 +55,6 @@
 
 <script lang="ts" setup>
 
-
-import {request} from "../../utils/requests.js";
-request.get("refresh")
 import {UploadFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import {ref} from "vue";
@@ -89,11 +88,21 @@ const checkBeforeUpload =  (rawFile) => {
   return true
 }
 
+import {request} from "../../utils/requests.js";
+request.get("refresh")
 const uploadFile = async (file)=> {
   const formData = new FormData();
   formData.append('file', file.file);
   let res = await request.post("/files/upload",formData,{
     'Content-Type': 'multipart/form-data',
   })
+}
+
+const UploadSuccess = (res, file, fileList)=>{
+  ElMessage.success("上传成功")
+}
+
+const UploadError= (res, file, fileList)=>{
+  ElMessage.error("上传失败")
 }
 </script>

@@ -16,6 +16,7 @@ import Signup from "../components/user/Signup.vue";
 import ChangePwd from "../components/user/ChangePwd.vue";
 
 import FileUpload from "../components/files/FileUpload.vue";
+import BigFileUpload from "../components/files/BigFileUpload.vue";
 
 // 注册页面路由
 const routes = [
@@ -68,6 +69,14 @@ const routes = [
                 name: "upload",
                 meta:{
                       title:"文件上传",
+                }
+            },
+            {
+                path:"big_upload",
+                component: BigFileUpload,
+                name: "big_upload",
+                meta:{
+                    title:"大文件上传",
                 }
             },
         ]
