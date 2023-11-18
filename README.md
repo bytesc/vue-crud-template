@@ -54,11 +54,14 @@ npm install
 # npm install element-plus
 # npm install @element-plus/icons-vue
 
+# npm install --save nprogress
+
 # npm install vue-router@4
 # npm install vuex@next --save
 # npm install axios
 
 # npm install jsencrypt --save
+
 ```
 
 ### 运行项目

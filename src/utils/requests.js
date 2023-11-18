@@ -5,15 +5,24 @@ import {ElMessage} from "element-plus";
 
 import {store} from "./store.js";
 
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+
 // 全局配置
 const service = axios.create({
     baseURL:"/api",
-    timeout:10000,  //请求超时
+    timeout:20000,  //请求超时
 })
 
+service.interceptors.request.use(config => {
+    NProgress.start()
+    return config
+})
 
 // 响应拦截
 service.interceptors.response.use(res=>{
+        NProgress.done()
         // res为获取的所有数据
         // console.log(res)
         const {code,data,msg} = res.data
@@ -76,6 +85,7 @@ service.interceptors.response.use(res=>{
         }
     },
     error => {
+        NProgress.done()
         ElMessage.error("网络连接超时")
         return Promise.reject(error);
     }

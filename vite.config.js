@@ -10,7 +10,7 @@ export default defineConfig({
       "/api":{  //代理解决跨域
         target:"http://127.0.0.1:8088/"
       }
-    }
+    },
   },
   base: "./" //打包相对路径
 })
