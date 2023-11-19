@@ -76,8 +76,6 @@ const HandleChangePwd = async ()=>{
     "old_password":await rsaEncrypt(form.value.old_password),
     "new_password":await rsaEncrypt(form.value.new_password)
   })
-  request.get(`/user/logout/`,{
-  })
 }
 
 </script>

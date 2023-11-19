@@ -17,6 +17,7 @@ import ChangePwd from "../components/user/ChangePwd.vue";
 
 import FileUpload from "../components/files/FileUpload.vue";
 import BigFileUpload from "../components/files/BigFileUpload.vue";
+import FileList from "../components/files/FileList.vue";
 
 // 注册页面路由
 const routes = [
@@ -59,9 +60,10 @@ const routes = [
     {
         path:"/files",
         name: "files",
-        // meta:{
-        //     title:"文件",
-        // },
+        component: FileList,
+        meta:{
+            title:"文件",
+        },
         children: [
             {
                 path:"upload",

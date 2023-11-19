@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 20px;">
-    <h3 style="text-align: center">多大文件上传</h3>
+<!--    <h3 style="text-align: center">多大文件上传</h3>-->
     <el-upload
         drag
         :http-request="uploadFile"
@@ -83,12 +83,13 @@ const submitMulUpload = () => {
 //   upload.value!.submit()
 // }
 
-const CHUNK_SIZE=1024*512;
+
 import {request} from "../../utils/requests.js";
 import {UploadFilled} from "@element-plus/icons-vue";
 request.get("refresh")
 
 let uploadProgress = ref(0)
+const CHUNK_SIZE=1024*256;
 const uploadFile = async (file)=> {
   const chunkList = []; // 文件分片列表
   let start = 0; // 分片开始索引
@@ -102,7 +103,7 @@ const uploadFile = async (file)=> {
     uploadProgress.value=parseInt((chunk.index/file.file.size*100).toString())
     const formData = new FormData();
     formData.append('file', chunk.file);
-    formData.append('filename', `${file.file.name}_${timestamp}`);
+    formData.append('filename', `${timestamp}_${file.file.name}`);
     formData.append('index', chunk.index.toString());
     let res = await request.post("/files/big_upload",formData,{
       'Content-Type': 'multipart/form-data',

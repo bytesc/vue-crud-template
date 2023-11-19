@@ -63,7 +63,7 @@ service.interceptors.response.use(res=>{
             window.location.href = '#/'
             return data
         } else if(code === "234") {
-            //注册成功
+            //注册或修改密码成功
             ElMessage.success(msg)
             window.location.href = '#/user/login'
             return data
