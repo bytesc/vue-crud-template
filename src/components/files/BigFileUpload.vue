@@ -21,8 +21,9 @@
         </div>
       </template>
     </el-upload>
-    <el-button class="ml-3" type="success" @click="submitMulUpload" v-if="hasFile">
-      upload to server
+    <el-button class="ml-3" type="success" @click="submitMulUpload" v-if="hasFile"
+    style="width: 100%">
+      上传到服务器
     </el-button>
     <el-progress v-if="uploadProgress!==0"
                  style="margin: 30px;"

@@ -64,24 +64,6 @@ const routes = [
         meta:{
             title:"文件",
         },
-        children: [
-            {
-                path:"upload",
-                component: FileUpload,
-                name: "upload",
-                meta:{
-                      title:"文件上传",
-                }
-            },
-            {
-                path:"big_upload",
-                component: BigFileUpload,
-                name: "big_upload",
-                meta:{
-                    title:"大文件上传",
-                }
-            },
-        ]
     },
     {
         path: '/form',

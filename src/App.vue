@@ -13,7 +13,7 @@ import Statement from "./components/user/Statement.vue";
 </script>
 
 <template>
-  <Statement/>
+<!--  <Statement/>-->
   <div class="common-layout">
     <el-container>
       <el-header style="padding: 0">

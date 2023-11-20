@@ -23,6 +23,10 @@ service.interceptors.request.use(config => {
 // 响应拦截
 service.interceptors.response.use(res=>{
         NProgress.done()
+        if (!res.headers['content-type'].includes('application/json')) {
+            return res;
+        }
+        // console.log(res)
         // res为获取的所有数据
         // console.log(res)
         const {code,data,msg} = res.data

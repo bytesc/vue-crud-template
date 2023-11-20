@@ -27,8 +27,6 @@
         </el-menu-item-group>
         <el-menu-item-group title="Group Two">
           <a href="#/files/"><el-menu-item index="2-1">文件列表</el-menu-item></a>
-          <a href="#/files/upload"><el-menu-item index="2-1">文件上传</el-menu-item></a>
-          <a href="#/files/big_upload"><el-menu-item index="2-1">大文件上传</el-menu-item></a>
           <el-menu-item index="2-2">item three</el-menu-item>
         </el-menu-item-group>
         <el-sub-menu index="2-3">
