@@ -12,7 +12,7 @@ import "nprogress/nprogress.css";
 // 全局配置
 const service = axios.create({
     baseURL:"/api",
-    timeout:20000,  //请求超时
+    timeout:10000,  //请求超时
 })
 
 service.interceptors.request.use(config => {

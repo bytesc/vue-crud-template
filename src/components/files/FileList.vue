@@ -1,12 +1,12 @@
 <template>
   <el-row style="justify-content: flex-end;">
-    <el-button type="primary" style="margin-right: 20px" @click="dialogVisible=true"
+    <el-button type="primary" style="margin-right: 20px" @click="dialogUpload=true"
     ><el-icon><Upload /></el-icon>上传</el-button>
   </el-row>
 
   <router-view></router-view>
 
-  <el-dialog v-model="dialogVisible" title="Tips" width="70%" draggable
+  <el-dialog v-model="dialogUpload" title="Tips" width="70%" draggable
              :before-close="handleCloseUploadDialog">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
@@ -17,6 +17,19 @@
       </div>
     </template>
     <BigFileUpload></BigFileUpload>
+  </el-dialog>
+
+  <el-dialog v-model="dialogDownload" title="Tips" width="70%" draggable
+             :before-close="handleCloseUploadDialog">
+    <template #header="{ close, titleId, titleClass }">
+      下载中
+    </template>
+    <el-progress
+                 style="margin: 30px;"
+                 :text-inside="true"
+                 :stroke-width="22"
+                 :percentage="percentDownloadCompleted"
+    />
   </el-dialog>
 
   <el-empty v-if="files === null || files === ''" description="没有文件"></el-empty>
@@ -54,7 +67,8 @@ import { ref ,onMounted} from 'vue'
 
 const files = ref([])
 
-const dialogVisible = ref(false)
+const dialogUpload = ref(false)
+const dialogDownload = ref(false)
 
 import {requestPack} from "../../utils/requests.js";
 import {CircleCloseFilled, DeleteFilled, Download, Upload} from "@element-plus/icons-vue";
@@ -62,7 +76,7 @@ import BigFileUpload from "./BigFileUpload.vue";
 import {ElMessage} from "element-plus";
 
 const handleCloseUploadDialog = async ()=>{
-  dialogVisible.value=false
+  dialogUpload.value=false
   files.value = await requestPack.get("/files/list")
 }
 
@@ -72,15 +86,22 @@ const handleDel = async (filename)=>{
 }
 
 import axios from "axios";
+let percentDownloadCompleted = ref(0)
 const handleDownload = async (filename) => {
   await requestPack.get("refresh");
+  dialogDownload.value=true
   let token = localStorage.getItem('token');
   let headers = { 'token': token };
   axios({
     url: 'api/files/download/' + filename,
     method: 'GET',
     responseType: 'blob', // important
-    headers: headers
+    headers: headers,
+    timeout: 10000,
+    onDownloadProgress: function(progressEvent) {
+      percentDownloadCompleted.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      console.log(dialogDownload.value)
+    }
   }).then((response) => {
     const url = URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
@@ -89,6 +110,7 @@ const handleDownload = async (filename) => {
     document.body.appendChild(link);
     link.click();
     link.remove();
+    // dialogDownload.value=false
   }).catch(error => {
     console.error('Error:', error);
     ElMessage.error("下载失败");
