@@ -8,7 +8,7 @@
     <el-row>
       <el-col :xs="0" :sm="0" :md="6" :lg="6" :xl="6"></el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-form :model="form" >
+        <el-form :model="form">
           <el-form-item label="用户名" :label-width="formLabelWidth">
             <el-input v-model="form.username" autocomplete="off"
                       placeholder="输入用户名" />

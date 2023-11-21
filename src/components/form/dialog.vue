@@ -12,7 +12,7 @@
 
   <el-dialog v-model="dialogFormVisible"
              :title="props.dialogType === 'add' ? '新增':'编辑'"
-             :append-to-body="true">
+             :append-to-body="true" width="80%">
     <el-form :model="form">
       <el-form-item label="name" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
@@ -94,5 +94,8 @@ let form = ref({
 <style scoped>
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+.el-input{
+  width:90%
 }
 </style>
