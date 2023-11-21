@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import {ref} from 'vue'
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 
 const dialogFormVisible = ref(true)
 const formLabelWidth = '140px'
@@ -48,7 +48,7 @@ const form = ref({
 
 import {rsaEncrypt} from "../../utils/rsa.js";
 const HandleLogin = async ()=>{
-  let res = request.post("/user/login",{
+  let res = requestPack.post("/user/login",{
     "name":form.value.username,
     "password":await rsaEncrypt(form.value.password)
   })

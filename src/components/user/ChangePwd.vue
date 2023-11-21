@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import {ref} from 'vue'
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 
 const dialogFormVisible = ref(true)
 const formLabelWidth = '140px'
@@ -71,7 +71,7 @@ const HandleChangePwd = async ()=>{
     ElMessage.error("密码不一致")
     return
   }
-  let res = await request.post("/user/change_pwd",{
+  let res = await requestPack.post("/user/change_pwd",{
     "name":form.value.username,
     "old_password":await rsaEncrypt(form.value.old_password),
     "new_password":await rsaEncrypt(form.value.new_password)

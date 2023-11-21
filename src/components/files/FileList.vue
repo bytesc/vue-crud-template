@@ -33,6 +33,8 @@
               {{ file.name }}
             </div>
             <time class="time">{{ file.time }}</time>
+            <br/>
+            <span class="time">{{(file.size/1024).toFixed(2)}}KB</span>
             <el-row>
               <el-button text class="button" style="color: #409EFF;"
                 @click="handleDownload(file.raw_name)"><el-icon><Download /></el-icon></el-button>
@@ -54,45 +56,47 @@ const files = ref([])
 
 const dialogVisible = ref(false)
 
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 import {CircleCloseFilled, DeleteFilled, Download, Upload} from "@element-plus/icons-vue";
 import BigFileUpload from "./BigFileUpload.vue";
+import {ElMessage} from "element-plus";
 
 const handleCloseUploadDialog = async ()=>{
   dialogVisible.value=false
-  files.value = await request.get("/files/list")
+  files.value = await requestPack.get("/files/list")
 }
 
 const handleDel = async (filename)=>{
-  let res = await request.post(`/files/delete/${filename}`)
-  files.value = await request.get("/files/list")
+  let res = await requestPack.post(`/files/delete/${filename}`)
+  files.value = await requestPack.get("/files/list")
 }
 
-const handleDownload  = async (filename)=> {
-  // 从localStorage或其他地方获取token
+import axios from "axios";
+const handleDownload = async (filename) => {
+  await requestPack.get("refresh");
   let token = localStorage.getItem('token');
-  // 构造请求头
-  let headers = new Headers();
-  headers.append('token', token);
-  // 发起fetch请求
-  await fetch('api/files/download/' + filename, { headers: headers })
-      .then(response => response.blob())
-      .then(blob => {
-        // 创建隐藏的可下载链接
-        let url = URL.createObjectURL(blob);
-        let link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', filename);
-        // 自动在浏览器中点击链接
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      })
-      .catch(error => console.error('Error:', error));
+  let headers = { 'token': token };
+  axios({
+    url: 'api/files/download/' + filename,
+    method: 'GET',
+    responseType: 'blob', // important
+    headers: headers
+  }).then((response) => {
+    const url = URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }).catch(error => {
+    console.error('Error:', error);
+    ElMessage.error("下载失败");
+  });
 }
 
 onMounted(async () => {
-  files.value = await request.get("/files/list")
+  files.value = await requestPack.get("/files/list")
 })
 
 </script>

@@ -49,9 +49,9 @@ import { useStore } from 'vuex'
 const store = useStore()
 let username = computed(() => store.getters.getName || '')
 
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 const HandleLogout = ()=>{
-  let res = request.get(`/user/logout/`,{
+  let res = requestPack.get(`/user/logout/`,{
   })
 }
 

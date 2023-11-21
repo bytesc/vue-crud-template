@@ -21,17 +21,16 @@
         </div>
       </template>
     </el-upload>
+    <el-progress v-if="uploadProgress!==0"
+                 style="margin: 30px;"
+                 :text-inside="false"
+                 :stroke-width="22"
+                 :percentage="uploadProgress"
+    />
     <el-button class="ml-3" type="success" @click="submitMulUpload" v-if="hasFile"
     style="width: 100%">
       上传到服务器
     </el-button>
-    <el-progress v-if="uploadProgress!==0"
-                 style="margin: 30px;"
-                 :text-inside="true"
-                 :stroke-width="22"
-                 :percentage="uploadProgress"
-                 status="warning"
-    />
   </div>
 
 
@@ -85,13 +84,37 @@ const submitMulUpload = () => {
 // }
 
 
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 import {UploadFilled} from "@element-plus/icons-vue";
-request.get("refresh")
+requestPack.get("refresh")
 
 let uploadProgress = ref(0)
-const CHUNK_SIZE=1024*256;
+const CHUNK_SIZE=1024*512;
+// const uploadFile = async (file)=> {
+//   const chunkList = []; // 文件分片列表
+//   let start = 0; // 分片开始索引
+//   while (start < file.file.size) {
+//     chunkList.push({ index: start, file: file.file.slice(start, start + CHUNK_SIZE) });
+//     start += CHUNK_SIZE;
+//   }
+//   const timestamp = Date.now();
+//   // 上传每个分片
+//   for (let chunk of chunkList) {
+//     uploadProgress.value=parseInt((chunk.index/file.file.size*100).toString())
+//     const formData = new FormData();
+//     formData.append('file', chunk.file);
+//     formData.append('filename', `${timestamp}_${file.file.name}`);
+//     formData.append('index', chunk.index.toString());
+//     let res = await requestPack.post("/files/big_upload",formData,{
+//       'Content-Type': 'multipart/form-data',
+//     })
+//   }
+//   uploadProgress.value=0
+// }
+import axios from "axios";
 const uploadFile = async (file)=> {
+  await requestPack.get("refresh");
+  let token = localStorage.getItem('token');
   const chunkList = []; // 文件分片列表
   let start = 0; // 分片开始索引
   while (start < file.file.size) {
@@ -101,17 +124,22 @@ const uploadFile = async (file)=> {
   const timestamp = Date.now();
   // 上传每个分片
   for (let chunk of chunkList) {
-    uploadProgress.value=parseInt((chunk.index/file.file.size*100).toString())
-    const formData = new FormData();
-    formData.append('file', chunk.file);
-    formData.append('filename', `${timestamp}_${file.file.name}`);
-    formData.append('index', chunk.index.toString());
-    let res = await request.post("/files/big_upload",formData,{
-      'Content-Type': 'multipart/form-data',
-    })
+    uploadProgress.value=Number((chunk.index / file.file.size * 100).toFixed(2))
+    const filename = `${timestamp}_${file.file.name}`;
+    let filenameEncoded = encodeURIComponent(filename); //非ascii需要编码
+    const index = chunk.index.toString();
+    let res = await axios.post("api/files/big_upload", chunk.file, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'filename': filenameEncoded,
+        'index': index,
+        "token":token
+      }
+    });
   }
   uploadProgress.value=0
 }
+
 
 const UploadSuccess = (res, file, fileList)=>{
   ElMessage.success("上传成功")

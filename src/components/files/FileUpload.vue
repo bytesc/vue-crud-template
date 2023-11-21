@@ -88,12 +88,12 @@ const checkBeforeUpload =  (rawFile) => {
   return true
 }
 
-import {request} from "../../utils/requests.js";
-request.get("refresh")
+import {requestPack} from "../../utils/requests.js";
+requestPack.get("refresh")
 const uploadFile = async (file)=> {
   const formData = new FormData();
   formData.append('file', file.file);
-  let res = await request.post("/files/upload",formData,{
+  let res = await requestPack.post("/files/upload",formData,{
     'Content-Type': 'multipart/form-data',
   })
 }

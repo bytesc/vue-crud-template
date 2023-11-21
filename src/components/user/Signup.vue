@@ -54,7 +54,7 @@ const form = ref({
   password_again:""
 })
 
-import {request} from "../../utils/requests.js";
+import {requestPack} from "../../utils/requests.js";
 import {rsaEncrypt} from "../../utils/rsa.js";
 import {ElMessage} from "element-plus";
 const HandleSignup = async ()=>{
@@ -70,7 +70,7 @@ const HandleSignup = async ()=>{
     ElMessage.error("密码不一致")
     return
   }
-  let res = request.post("/user/signup",{
+  let res = requestPack.post("/user/signup",{
     "name":form.value.username,
     "password":await rsaEncrypt(form.value.password),
     "email":form.value.email

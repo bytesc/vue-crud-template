@@ -96,7 +96,7 @@ service.interceptors.response.use(res=>{
 )
 
 // 请求方法配置
-function request(options){
+function requestPack(options){
     if(options.method.toLowerCase() === "get"){
         options.params = options.data
     }
@@ -114,8 +114,8 @@ function request(options){
 
 // 给request添加request.post()和.get(),从而给request传参（这一步作用是封装）
 ["get","post"].forEach(item=>{
-    request[item] = (url,data,headers) =>{
-        return request({
+    requestPack[item] = (url, data, headers) =>{
+        return requestPack({
             url,
             data,
             headers,
@@ -125,4 +125,4 @@ function request(options){
 })
 
 // 导出才能用
-export {request}
+export {requestPack}
