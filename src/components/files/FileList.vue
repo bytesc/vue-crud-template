@@ -19,8 +19,8 @@
     <BigFileUpload></BigFileUpload>
   </el-dialog>
 
-  <el-empty v-if="files === null"
-            description="没有文件"></el-empty>
+  <el-empty v-if="files === null || files === ''" description="没有文件"></el-empty>
+
   <div style="margin: 30px">
     <el-row :gutter="12">
       <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"
