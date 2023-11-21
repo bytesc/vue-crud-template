@@ -8,7 +8,8 @@ export default defineConfig({
     port : 8009, //指定部署端口号
     proxy:{
       "/api":{  //代理解决跨域
-        target:"http://127.0.0.1:8008/"
+        // target:"http://127.0.0.1:8008/"
+        target:"http://bytesc.top:8008/"
       }
     },
   },

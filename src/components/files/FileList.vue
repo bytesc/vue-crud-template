@@ -77,6 +77,7 @@ import {ElMessage} from "element-plus";
 
 const handleCloseUploadDialog = async ()=>{
   dialogUpload.value=false
+  dialogDownload.value=false
   files.value = await requestPack.get("/files/list")
 }
 
@@ -97,7 +98,7 @@ const handleDownload = async (filename) => {
     method: 'GET',
     responseType: 'blob', // important
     headers: headers,
-    timeout: 10000,
+    timeout: 9999999999,
     onDownloadProgress: function(progressEvent) {
       percentDownloadCompleted.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       console.log(dialogDownload.value)

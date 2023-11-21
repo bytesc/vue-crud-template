@@ -135,7 +135,7 @@ const uploadFile = async (file)=> {
         'index': index,
         "token":token
       },
-      timeout: 60000
+      timeout: 120000
     });
   }
   uploadProgress.value=0
