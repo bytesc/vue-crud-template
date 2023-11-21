@@ -36,7 +36,7 @@
 
   <div style="margin: 30px">
     <el-row :gutter="12">
-      <el-col :xs="6" :sm="6" :md="4" :lg="4" :xl="4"
+      <el-col :xs="12" :sm="6" :md="4" :lg="4" :xl="4"
           v-for="(file, index) in files"
           :key="index"
       >

@@ -5,8 +5,10 @@
   <el-dialog v-model="dialogFormVisible" title="用户注册"
              :fullscreen="true" :center="true" :show-close="false" :align-center="true"
   >
-    <el-row :justify="'center'">
-      <el-col :span="12">
+
+    <el-row>
+      <el-col :xs="0" :sm="0" :md="6" :lg="6" :xl="6"></el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-form :model="form" >
           <el-form-item label="用户名" :label-width="formLabelWidth">
             <el-input v-model="form.username" placeholder="username"/>
@@ -26,6 +28,7 @@
           </el-form-item>
         </el-form>
       </el-col>
+      <el-col :xs="0" :sm="0" :md="6" :lg="6" :xl="6"></el-col>
     </el-row>
 
     <template #footer>
@@ -86,7 +89,7 @@ const HandleSignup = async ()=>{
   width: 300px;
 }
 .el-input {
-  width: 300px;
+  width: 80%;
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
