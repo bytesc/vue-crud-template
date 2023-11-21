@@ -100,6 +100,39 @@ npm run build
 
 如果本地打开需要用firefox，或是webstorm，vscode的Live Server插件等。crome内核的浏览器（google，edge）会出现无法访问本地文件的问题（不影响线上部署，线上部署后任何浏览器都可以打开的）。
 
+### 生产环境的跨域代理
+
+以 nigix 为例
+```bash
+sudo vim /etc/nginx/sites-enabled/default
+```
+
+```txt
+server {
+       listen 8009;
+       listen [::]:8009;
+
+       server_name bytesc.top www.bytesc.top;
+
+       root /var/www/vue-crud;
+       index index.html;
+
+       location / {
+               try_files $uri $uri/ =404;
+       }
+    location /api {
+        proxy_pass http://bytesc.top:8008;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+```bash
+sudo systemctl restart nginx
+```
+
 
 ### 官方文档
 

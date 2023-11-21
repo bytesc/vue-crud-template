@@ -5,10 +5,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server:{
-    port : 8086, //指定部署端口号
+    port : 8009, //指定部署端口号
     proxy:{
       "/api":{  //代理解决跨域
-        target:"http://127.0.0.1:8088/"
+        target:"http://bytesc.top:8008/"
       }
     },
   },
