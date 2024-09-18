@@ -4,7 +4,7 @@
 
 📌[在线演示链接](http://bytesc.top:8009)
 
-📌[配套后端项目地址](https://github.com/bytesc/go-crud-template)
+📌[配套后端项目地址](https://github.com/bytesc/go-grpc-crud-template)
 
 [个人网站：www.bytesc.top](http://www.bytesc.top) 
 
