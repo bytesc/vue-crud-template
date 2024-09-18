@@ -159,7 +159,7 @@ sudo systemctl restart nginx
 
 ### 配套后端项目
 
-还需要运行配套后端项目 📌[配套后端项目地址(分布式版)](https://github.com/bytesc/go-grpc-crud-template) 📌[配套后端项目地址(普通版)](https://github.com/bytesc/go-crud-template)
+还需要运行配套后端项目 📌[配套后端项目地址(分布式版)](https://github.com/bytesc/go-grpc-crud-template) 或 📌[配套后端项目地址(普通版)](https://github.com/bytesc/go-crud-template)
 
 ### 官方文档
 
